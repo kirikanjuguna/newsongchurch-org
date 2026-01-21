@@ -45,13 +45,14 @@ export default function HomeHighlights() {
                 viewport={{ once: true }}
               >
                 <Link
-                  href={item.href}
-                  className="group block h-full rounded-3xl
-                             bg-white text-foreground
-                             p-12 shadow-xl border border-black/5
-                             transition-all duration-300
-                             hover:-translate-y-3 hover:shadow-2xl"
+                href={item.href}
+                className="group block h-full rounded-3xl
+                            bg-black/80 backdrop-blur-sm text-white
+                            p-12 shadow-[0_8px_24px_rgba(239,197,149,0.25)] border border-black/5
+                            transition-all duration-300
+                            hover:-translate-y-3 hover:shadow-[0_12px_32px_rgba(239,197,149,0.35)]"
                 >
+
                   {/* Icon */}
                   <div
                     className="mb-10 inline-flex h-16 w-16 items-center justify-center

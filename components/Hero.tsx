@@ -1,48 +1,21 @@
-"use client";
-
-import Link from "next/link";
-
 export default function Hero() {
   return (
-    <section className="relative min-h-[90vh] flex items-center">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1507692049790-de58290a4334?q=80&w=2070&auto=format&fit=crop')",
-        }}
-      />
-
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-background/80" />
+    <section className="relative min-h-[85vh] flex items-center">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-accent/30 via-background to-background" />
 
       {/* Content */}
-      <div className="relative z-10 max-w-4xl px-6 mx-auto text-center">
-        <h1 className="text-4xl md:text-6xl font-semibold leading-tight">
-          A Church on Mission
+      <div className="relative max-w-7xl mx-auto px-6 pt-32 pb-48 text-center">
+        <h1 className="text-4xl md:text-6xl font-semibold max-w-4xl mx-auto leading-tight">
+          Serving God. <br className="hidden md:block" />
+          Serving People. <br className="hidden md:block" />
+          Transforming Communities.
         </h1>
 
-        <p className="mt-6 text-lg md:text-xl text-secondary max-w-2xl mx-auto">
-          New Song Church exists to love God, serve people, and transform
-          communities through faith, compassion, and purpose.
+        <p className="mt-8 max-w-2xl mx-auto text-lg text-secondary">
+          New Song Church exists to share the love of Christ through worship,
+          community outreach, and mission-driven service.
         </p>
-
-        <div className="mt-10 flex justify-center gap-4">
-          <Link
-            href="/mission"
-            className="px-6 py-3 rounded-xl bg-accent text-foreground font-medium hover:opacity-90 transition"
-          >
-            Our Mission
-          </Link>
-
-          <Link
-            href="/about"
-            className="px-6 py-3 rounded-xl border border-secondary text-foreground hover:bg-surface transition"
-          >
-            Learn More
-          </Link>
-        </div>
       </div>
     </section>
   );

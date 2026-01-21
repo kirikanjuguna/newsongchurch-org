@@ -30,7 +30,7 @@ const highlights = [
 
 export default function HomeHighlights() {
   return (
-    <section className="relative -mt-40 pb-32">
+    <section className="relative -mt-24 pb-32">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid gap-10 md:grid-cols-3">
           {highlights.map((item, index) => {
@@ -41,7 +41,7 @@ export default function HomeHighlights() {
                 key={item.title}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
+                transition={{ duration: 0.7, delay: index * 0.12 }}
                 viewport={{ once: true }}
               >
                 <Link
@@ -52,7 +52,7 @@ export default function HomeHighlights() {
                              transition-all duration-300
                              hover:-translate-y-3 hover:shadow-2xl"
                 >
-                  {/* icon container */}
+                  {/* Icon */}
                   <div
                     className="mb-10 inline-flex h-16 w-16 items-center justify-center
                                rounded-2xl bg-accent/40 text-foreground"

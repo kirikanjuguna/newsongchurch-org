@@ -54,7 +54,7 @@ export default function RecentWork() {
             >
               <Link
                 href={work.href}
-                className="group relative block h-[520px] rounded-[2.5rem] overflow-hidden shadow-xl
+                className="group relative block h-130 rounded-[2.5rem] overflow-hidden shadow-xl
                            transition-all duration-500
                            hover:-translate-y-4 hover:shadow-2xl"
               >
@@ -66,7 +66,7 @@ export default function RecentWork() {
                 />
 
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
 
                 {/* Content */}
                 <div className="relative z-10 flex h-full flex-col justify-end p-12">

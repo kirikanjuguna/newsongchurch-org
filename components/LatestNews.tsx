@@ -39,7 +39,7 @@ export default function LatestNews() {
                 className="group mt-10 inline-flex items-center gap-4 text-lg font-medium text-foreground"
               >
                 Explore all stories
-                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-accent text-foreground transition group-hover:translate-x-1">
+                <span className="inline-flex h-11 w-11 items-center justify-center rounded-full bg-accent/70 text-foreground transition group-hover:translate-x-1">
                   <ArrowRight size={18} />
                 </span>
               </Link>

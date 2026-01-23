@@ -13,7 +13,14 @@
   --accent: #efc595;     /* Chalky */
   --highlight: #ffd986;  /* Warm highlight */
 }
-
+[data-theme="dark"] {
+  --background: #0a0a0a;
+  --surface: #1a1a1a;
+  --foreground: #ededed;
+  --secondary: #bbbbbb;
+  --accent: #efc595; /* can stay same */
+  --highlight: #ffd986; 
+}
 
 @theme inline {
   --color-background: var(--background);

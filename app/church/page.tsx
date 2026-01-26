@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import ImageSlider from "@/components/ImageSlider";
 
 export default function ChurchPage() {
   return (
@@ -123,17 +124,19 @@ export default function ChurchPage() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="relative h-[420px] rounded-2xl overflow-hidden"
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="relative h-[420px]"
             >
-              <img
-                src="/church/children-ministry.jpg"
-                alt="Children Ministry"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
+            <ImageSlider
+                images={[
+                "/church/children-1.jpg",
+                "/church/children-2.jpg",
+                "/church/children-3.jpg",
+                ]}
+            />
             </motion.div>
           </div>
 
@@ -240,13 +243,16 @@ export default function ChurchPage() {
               </p>
             </div>
 
-            <div className="relative h-[420px] rounded-2xl overflow-hidden">
-              <img
-                src="/church/women-ministry.jpg"
-                alt="Women Ministry"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
+            <div className="relative h-[420px]">
+            <ImageSlider
+                images={[
+                "/church/women-1.jpg",
+                "/church/women-2.jpg",
+                "/church/women-3.jpg",
+                ]}
+            />
             </div>
+
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">

@@ -18,22 +18,22 @@ export default function AboutPage() {
       <div className="max-w-7xl mx-auto px-6">
         {/* Page Heading */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-3xl mb-16"
+          transition={{ duration: 0.7 }}
+          className="max-w-3xl mb-20"
         >
-          <h1 className="text-4xl md:text-5xl font-semibold text-foreground">
+          <h1 className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">
             About New Song Church
           </h1>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
             A fellowship of believers committed to Christ, community, and
             transformational love.
           </p>
         </motion.div>
 
         {/* Layout */}
-        <div className="grid grid-cols-1 md:grid-cols-[260px_1fr] gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-12">
           {/* Side Tabs */}
           <aside className="md:sticky md:top-28 self-start">
             <ul className="flex md:flex-col gap-3">
@@ -41,11 +41,11 @@ export default function AboutPage() {
                 <button
                   key={tab.id}
                   onClick={() => setActive(tab.id)}
-                  className={`text-left px-4 py-3 rounded-lg transition
+                  className={`text-left px-5 py-3 rounded-xl font-medium transition-all duration-300
                     ${
                       active === tab.id
-                        ? "bg-accent text-accent-foreground"
-                        : "bg-muted/40 text-muted-foreground hover:bg-muted"
+                        ? "bg-[#D79A59] text-accent-foreground shadow-lg"
+                        : "bg-card text-foreground/70 hover:bg-accent/10"
                     }`}
                 >
                   {tab.label}
@@ -55,7 +55,7 @@ export default function AboutPage() {
           </aside>
 
           {/* Content */}
-          <div className="space-y-16">
+          <div className="space-y-20">
             {active === "who" && <WhoWeAre />}
             {active === "beliefs" && <Beliefs />}
             {active === "vision" && <VisionMission />}
@@ -77,10 +77,10 @@ function Section({ title, children }: { title: string; children: any }) {
       transition={{ duration: 0.5 }}
       className="max-w-3xl"
     >
-      <h2 className="text-3xl font-semibold text-foreground mb-6">
+      <h2 className="text-3xl md:text-4xl font-semibold text-foreground mb-6">
         {title}
       </h2>
-      <div className="space-y-6 text-muted-foreground text-lg leading-relaxed">
+      <div className="space-y-6 text-lg leading-relaxed text-muted-foreground">
         {children}
       </div>
     </motion.div>
@@ -90,6 +90,11 @@ function Section({ title, children }: { title: string; children: any }) {
 function WhoWeAre() {
   return (
     <Section title="Who We Are">
+      <div className="group block h-full rounded-3xl
+                      bg-black/80 backdrop-blur-sm text-white
+                      p-12 shadow-[0_8px_24px_rgba(239,197,149,0.25)] border border-black/5
+                      transition-all duration-300
+                      hover:-translate-y-3 hover:shadow-[0_12px_32px_rgba(239,197,149,0.35)]">
       <p>
         We are a fellowship of believers committed to Jesus Christ as our Lord
         and Savior.
@@ -107,6 +112,7 @@ function WhoWeAre() {
         “Love the Lord your God with all your heart… and love your neighbor as
         yourself.” — Matthew 22:37–39
       </p>
+      </div>
     </Section>
   );
 }
@@ -114,7 +120,12 @@ function WhoWeAre() {
 function Beliefs() {
   return (
     <Section title="Our Beliefs">
-      <ul className="space-y-4">
+      <div className="group block h-full rounded-3xl
+                      bg-black/80 backdrop-blur-sm text-white
+                      p-12 shadow-[0_8px_24px_rgba(239,197,149,0.25)] border border-black/5
+                      transition-all duration-300
+                      hover:-translate-y-3 hover:shadow-[0_12px_32px_rgba(239,197,149,0.35)]">
+      <ul className="space-y-4 list-disc list-inside">
         <li>
           We believe in one God — the God of love and mercy — who gave His life
           as a sacrifice for all sins.
@@ -150,6 +161,7 @@ function Beliefs() {
           friendships.
         </li>
       </ul>
+      </div>
     </Section>
   );
 }
@@ -158,33 +170,37 @@ function VisionMission() {
   return (
     <Section title="Our Vision & Mission">
       <div className="space-y-10">
-        <div className="p-6 rounded-xl bg-muted/40">
-          <h3 className="text-xl font-semibold text-foreground mb-3">
-            Vision
-          </h3>
-          <p className="italic">
+        <div className="group block h-full rounded-3xl
+                      bg-black/80 backdrop-blur-sm text-white
+                        p-12 shadow-[0_8px_24px_rgba(239,197,149,0.25)] border border-black/5
+                        transition-all duration-300
+                        hover:-translate-y-3 hover:shadow-[0_12px_32px_rgba(239,197,149,0.35)]">
+          <h3 className="text-xl font-semibold text-foreground mb-3">Vision</h3>
+          <p className="italic text-accent">
             “To love Him with all your heart… and love your neighbor as yourself
             is more important than all offerings.” — Mark 12:33
           </p>
-          <p className="mt-4">
+          <p className="mt-4 text-muted-foreground">
             All people are created in the image of God. Our calling is to love
             people just as much as God loves them.
           </p>
         </div>
 
-        <div className="p-6 rounded-xl bg-muted/40">
-          <h3 className="text-xl font-semibold text-foreground mb-3">
-            Mission
-          </h3>
-          <p>
+        <div className="group block h-full rounded-3xl
+                      bg-black/80 backdrop-blur-sm text-white
+                        p-12 shadow-[0_8px_24px_rgba(239,197,149,0.25)] border border-black/5
+                        transition-all duration-300
+                        hover:-translate-y-3 hover:shadow-[0_12px_32px_rgba(239,197,149,0.35)]">
+          <h3 className="text-xl font-semibold text-foreground mb-3">Mission</h3>
+          <p className="text-muted-foreground">
             To transform lives one at a time through the teaching of God’s Holy
             Word, serving the un-served in the slums of Nairobi.
           </p>
-          <p>
+          <p className="text-muted-foreground">
             We empower single mothers, widows, and families through spiritual
             discipleship, social skills training, and small business support.
           </p>
-          <p>
+          <p className="text-muted-foreground">
             Our ultimate goal is to break cycles of poverty, disease,
             illiteracy, crime, and drugs through God’s Word.
           </p>
@@ -197,6 +213,11 @@ function VisionMission() {
 function WhereWeServe() {
   return (
     <Section title="Where We Serve">
+      <div className="group block h-full rounded-3xl
+                      bg-black/80 backdrop-blur-sm text-white
+                      p-12 shadow-[0_8px_24px_rgba(239,197,149,0.25)] border border-black/5
+                      transition-all duration-300
+                      hover:-translate-y-3 hover:shadow-[0_12px_32px_rgba(239,197,149,0.35)]">
       <p>
         Nairobi is home to over 5.4 million people, with more than half living in
         low-income informal settlements.
@@ -219,6 +240,7 @@ function WhereWeServe() {
         This work is made possible through partnerships with ECF Church (Oregon,
         USA) and other like-minded believers locally and internationally.
       </p>
+      </div>
     </Section>
   );
 }

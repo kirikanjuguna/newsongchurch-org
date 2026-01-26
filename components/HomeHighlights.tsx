@@ -11,6 +11,7 @@ const highlights = [
       "A Christ-centered church devoted to worship, discipleship, and spiritual growth.",
     href: "/church",
     icon: Church,
+    image: "/home/church.jpg",
   },
   {
     title: "Community",
@@ -18,6 +19,7 @@ const highlights = [
       "Serving families and individuals through outreach, compassion, and practical support.",
     href: "/community",
     icon: Users,
+    image: "/home/community.jpg",
   },
   {
     title: "Mission Work",
@@ -25,6 +27,7 @@ const highlights = [
       "Transforming lives through education, healthcare, and faith-driven missions.",
     href: "/mission",
     icon: Globe,
+    image: "/home/mission.jpg",
   },
 ];
 
@@ -45,36 +48,66 @@ export default function HomeHighlights() {
                 viewport={{ once: true }}
               >
                 <Link
-                href={item.href}
-                className="group block h-full rounded-3xl
-                            bg-black/80 backdrop-blur-sm text-white
-                            p-12 shadow-[0_8px_24px_rgba(239,197,149,0.25)] border border-black/5
-                            transition-all duration-300
-                            hover:-translate-y-3 hover:shadow-[0_12px_32px_rgba(239,197,149,0.35)]"
+                  href={item.href}
+                  className="group relative block h-full overflow-hidden rounded-3xl
+                             transition-all duration-500
+                             hover:-translate-y-3"
                 >
-
-                  {/* Icon */}
+                  {/* Glow layer */}
                   <div
-                    className="mb-10 inline-flex h-16 w-16 items-center justify-center
-                               rounded-2xl bg-accent/40 text-foreground"
+                    className="absolute -inset-1 rounded-3xl
+                               bg-accent/30 blur-xl opacity-60
+                               transition-all duration-500
+                               group-hover:opacity-90
+                               group-hover:blur-2xl"
+                  />
+
+                  {/* Card */}
+                  <div
+                    className="relative z-10 h-full overflow-hidden rounded-3xl
+                               shadow-[0_12px_32px_rgba(239,197,149,0.35)]
+                               group-hover:shadow-[0_20px_48px_rgba(239,197,149,0.55)]
+                               transition-shadow duration-500"
                   >
-                    <Icon size={30} strokeWidth={1.5} />
+                    {/* Background Image */}
+                    <div
+                      className="absolute inset-0 bg-cover bg-center transition-transform duration-700
+                                 group-hover:scale-105"
+                      style={{ backgroundImage: `url(${item.image})` }}
+                    />
+
+                    {/* Overlay */}
+                    <div
+                      className="absolute inset-0 bg-linear-to-b
+                                 from-black/30 via-black/55 to-black/85"
+                    />
+
+                    {/* Content */}
+                    <div className="relative z-10 p-12 text-white h-full flex flex-col">
+                      {/* Icon */}
+                      <div
+                        className="mb-10 inline-flex h-16 w-16 items-center justify-center
+                                   rounded-2xl bg-white/15 backdrop-blur-sm"
+                      >
+                        <Icon size={30} strokeWidth={1.5} />
+                      </div>
+
+                      <h3 className="text-2xl font-semibold mb-4">
+                        {item.title}
+                      </h3>
+
+                      <p className="text-white/85 leading-relaxed max-w-sm">
+                        {item.description}
+                      </p>
+
+                      <span className="mt-auto pt-10 inline-flex items-center gap-2 font-medium">
+                        Learn more
+                        <span className="transition-transform group-hover:translate-x-1">
+                          →
+                        </span>
+                      </span>
+                    </div>
                   </div>
-
-                  <h3 className="text-2xl font-semibold mb-4">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-secondary leading-relaxed">
-                    {item.description}
-                  </p>
-
-                  <span className="mt-10 inline-flex items-center gap-2 font-medium">
-                    Learn more
-                    <span className="transition group-hover:translate-x-1">
-                      →
-                    </span>
-                  </span>
                 </Link>
               </motion.div>
             );

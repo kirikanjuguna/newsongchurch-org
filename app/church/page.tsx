@@ -4,185 +4,269 @@ import { motion } from "framer-motion";
 
 export default function ChurchPage() {
   return (
-    <section className="bg-background">
-      <HeroIntro />
-      <TeachTheWord />
-      <Ministries />
-      <CallToAction />
-    </section>
-  );
-}
+    <main className="bg-background text-foreground">
 
-/* ---------------- HERO ---------------- */
+      {/* ================= TEACH THE WORD ================= */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-14 items-center">
+          
+          {/* Image */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+            className="relative h-[420px] rounded-2xl overflow-hidden"
+          >
+            <img
+              src="/church/teach-the-word.jpg"
+              alt="Teaching the Word"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/25" />
+          </motion.div>
 
-function HeroIntro() {
-  return (
-    <section className="relative py-32 text-center bg-muted/30">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8 }}
-        className="max-w-4xl mx-auto px-6"
-      >
-        <h1 className="text-4xl md:text-5xl font-semibold text-foreground">
-          Welcome to New Song Church
-        </h1>
-        <p className="mt-6 text-lg text-muted-foreground">
-          A diverse church for a diverse inner-city community.
-          Real encounters with God through His Word and worship.
-        </p>
+          {/* Content */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl md:text-4xl font-semibold mb-6">
+              Teach the Word
+            </h2>
 
-        <div className="mt-10 inline-block rounded-xl bg-accent px-8 py-4 text-accent-foreground font-medium">
-          Sundays · 9:00–10:00 AM & 10:00–12:30 PM
+            <p className="mb-4">
+              At New Song Church, we are committed to expository Bible teaching.
+              Teaching the Bible book by book, chapter by chapter and verse by verse.
+            </p>
+
+            <p className="mb-4">
+              Our goal is to faithfully present God’s Word in its original context,
+              helping people understand what the Bible says, what it means, and how it
+              applies to everyday life.
+            </p>
+
+            <p className="mb-4">
+              Each message is rooted in Scripture, centered on Christ, and empowered
+              by the Holy Spirit, so that believers can grow in spiritual maturity
+              and live out their faith with confidence and clarity.
+            </p>
+
+            <span className="block mt-6 text-accent font-medium">
+              Acts 20:27
+            </span>
+          </motion.div>
         </div>
-      </motion.div>
-    </section>
-  );
-}
+      </section>
 
-/* ---------------- TEACHING ---------------- */
+      {/* ================= SUNDAY WORSHIP ================= */}
+      <section className="relative py-32">
+        <div className="absolute inset-0">
+          <img
+            src="/church/sunday-worship.jpg"
+            alt="Sunday Worship"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-linear-to-b from-black/30 via-black/50 to-background" />
+        </div>
 
-function TeachTheWord() {
-  return (
-    <section className="py-24">
-      <div className="max-w-5xl mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-3xl font-semibold text-foreground mb-6">
-            Teaching the Word
+        <div className="relative max-w-4xl mx-auto px-6 text-center text-white">
+          <h2 className="text-3xl md:text-4xl font-semibold mb-6">
+            Worship & Fellowship
           </h2>
 
-          <p className="text-lg text-muted-foreground leading-relaxed">
-            At New Song Church, we are committed to expository Bible teaching —
-            teaching the Bible book by book, chapter by chapter, and verse by
-            verse.
+          <p className="mb-6 text-white/90">
+            Each Sunday we provide a space for spiritual worship through songs,
+            words and meditation on God’s glory and goodness in our lives.
           </p>
 
-          <p className="mt-6 text-lg text-muted-foreground leading-relaxed">
-            Our goal is to faithfully present God’s Word in its original
-            context, helping people understand what the Bible says, what it
-            means, and how it applies to everyday life.
-          </p>
-
-          <p className="mt-6 italic text-accent">
-            “For I have not hesitated to proclaim to you the whole will of God.”
-            — Acts 20:27
-          </p>
-        </motion.div>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- MINISTRIES ---------------- */
-
-function Ministries() {
-  return (
-    <section className="py-24 bg-muted/30">
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-3xl font-semibold text-foreground mb-16 text-center">
-          Our Ministries
-        </h2>
-
-        <div className="grid md:grid-cols-3 gap-10">
-          <MinistryCard
-            title="Children’s Ministry"
-            description="A joyful, safe, and nurturing place where children grow in faith, love, and confidence."
-            details={[
-              "Over 1,000 children reached in 15 years",
-              "Safe and loving environment",
-              "Worship, play, and VBS classes",
-              "Weekly nourishment and care",
-              "Led by Dorcas Sinaida and a team of volunteers",
-            ]}
-          />
-
-          <MinistryCard
-            title="Youth & College Ministry"
-            description="Building strong faith foundations through worship, community, and mentorship."
-            details={[
-              "ALATS Kenya dance ministry",
-              "Evangelism through dance and art",
-              "Youth & college life groups",
-              "Mentorship and leadership development",
-              "Breaking cycles of illiteracy and poverty",
-            ]}
-          />
-
-          <MinistryCard
-            title="Women’s Ministry"
-            description="Uplifting and empowering women spiritually, emotionally, and economically."
-            details={[
-              "Bible studies led by Valerie Kivayiru",
-              "Home fellowships and prayer groups",
-              "Skills & entrepreneurship training",
-              "Single mother support and counseling",
-              "Older women life groups (Mamas)",
-            ]}
-          />
+          <div className="mt-8 text-lg font-medium">
+            JOIN US: SUNDAYS <br />
+            9:00AM – 10:00AM &nbsp;|&nbsp; 10:00AM – 12:30PM
+          </div>
         </div>
-      </div>
-    </section>
-  );
-}
+      </section>
 
-function MinistryCard({
-  title,
-  description,
-  details,
-}: {
-  title: string;
-  description: string;
-  details: string[];
-}) {
-  return (
-    <motion.div
-      whileHover={{ y: -6 }}
-      transition={{ duration: 0.3 }}
-      className="rounded-2xl bg-background p-8 shadow-sm border border-accent/30"
-    >
-      <h3 className="text-xl font-semibold text-foreground mb-4">
-        {title}
-      </h3>
-      <p className="text-muted-foreground mb-6">{description}</p>
+      {/* ================= CHILDREN MINISTRY ================= */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6 space-y-20">
 
-      <ul className="space-y-3 text-muted-foreground text-sm">
-        {details.map((item) => (
-          <li key={item}>• {item}</li>
-        ))}
-      </ul>
-    </motion.div>
-  );
-}
+          {/* Intro */}
+          <div className="grid md:grid-cols-2 gap-14 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl md:text-4xl font-semibold mb-6">
+                Children’s Ministry
+              </h2>
 
-/* ---------------- CTA ---------------- */
+              <p className="mb-4">
+                Our Children’s Ministry is a joyful, safe, and nurturing place
+                where children can grow in their faith while having fun.
+              </p>
 
-function CallToAction() {
-  return (
-    <section className="py-24 text-center">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-        className="max-w-3xl mx-auto px-6"
-      >
-        <h2 className="text-3xl font-semibold text-foreground">
-          Join Us This Sunday
-        </h2>
-        <p className="mt-6 text-lg text-muted-foreground">
-          Come as you are. Experience worship, community, and God’s Word in a
-          welcoming environment.
-        </p>
+              <p className="mb-4">
+                For the last 15 years over a thousand children from Mukuru
+                community have gone through our Children’s ministry classes
+                every Sunday.
+              </p>
 
-        <div className="mt-10 inline-block rounded-xl bg-accent px-10 py-4 text-accent-foreground font-medium">
-          Sundays · New Song Chapel
+              <p>
+                Some of those children are now serving as youth leaders,
+                singers, dancers, ushers and Bible students at Mana Bible College.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="relative h-[420px] rounded-2xl overflow-hidden"
+            >
+              <img
+                src="/church/children-ministry.jpg"
+                alt="Children Ministry"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </motion.div>
+          </div>
+
+          {/* Leader */}
+          <div className="grid md:grid-cols-2 gap-14 items-center">
+            <div className="relative h-[360px] rounded-2xl overflow-hidden">
+              <img
+                src="/church/dorcas.jpg"
+                alt="Dorcas Sinaida"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-semibold mb-4">
+                Children Ministry Team Leader
+              </h3>
+              <p>
+                Meet Dorcas Sinaida who has been part of our Church community
+                since she was in High School. Today Dorcas is leading our
+                Children’s ministry alongside 12 volunteer teachers.
+              </p>
+            </div>
+          </div>
+
+          {/* Features */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                title: "A Safe & Loving Environment",
+                text:
+                  "Children are cared for, known by name and village, and encouraged to grow spiritually with confidence.",
+              },
+              {
+                title: "Worship, Fun & Play",
+                text:
+                  "Singing, dancing, and joyful activities help children learn about God creatively.",
+              },
+              {
+                title: "VBS Classes",
+                text:
+                  "Structured lessons, games, music and fun activities help children dive deeper into God’s Word.",
+              },
+              {
+                title: "Nourishment Every Sunday",
+                text:
+                  "Children are provided with food, caring for them spiritually and physically.",
+              },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="p-6 rounded-xl bg-muted/40 border border-border"
+              >
+                <h4 className="font-semibold mb-3">{item.title}</h4>
+                <p className="text-sm text-foreground/80">{item.text}</p>
+              </div>
+            ))}
+          </div>
         </div>
-      </motion.div>
-    </section>
+      </section>
+
+      {/* ================= YOUTH & ALATS ================= */}
+      <section className="relative py-32">
+        <div className="absolute inset-0">
+          <img
+            src="/church/alats.jpg"
+            alt="ALATS Kenya Dancers"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-black/60" />
+        </div>
+
+        <div className="relative max-w-4xl mx-auto px-6 text-white">
+          <h2 className="text-3xl md:text-4xl font-semibold mb-6">
+            Youth Ministry – ALATS Kenya
+          </h2>
+
+          <p>
+            ALATS is a Hebrew word meaning “to jump for joy.” ALATS Kenya is a
+            youth dance ministry cultivating passion for dance while empowering
+            young people to communicate the Gospel through artistic excellence
+            in a safe, Spirit-filled environment.
+          </p>
+        </div>
+      </section>
+
+      {/* ================= WOMEN MINISTRY ================= */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6 space-y-20">
+          <div className="grid md:grid-cols-2 gap-14 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-semibold mb-6">
+                Women’s Ministry
+              </h2>
+
+              <p className="mb-4">
+                Our Women’s Ministry exists to uplift, equip, and empower women
+                in low-income communities across Mukuru.
+              </p>
+
+              <p>
+                Meet Valerie Kivayiru, overseeing women’s Bible studies through
+                book by book, chapter by chapter, and verse by verse devotion.
+              </p>
+            </div>
+
+            <div className="relative h-[420px] rounded-2xl overflow-hidden">
+              <img
+                src="/church/women-ministry.jpg"
+                alt="Women Ministry"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              "Spiritual Empowerment",
+              "Fellowship & Bonding",
+              "Skills & Entrepreneurship Training",
+              "Counseling & Single Mother Support",
+            ].map((title, i) => (
+              <div
+                key={i}
+                className="p-6 rounded-xl bg-muted/40 border border-border"
+              >
+                <h4 className="font-semibold">{title}</h4>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+    </main>
   );
 }

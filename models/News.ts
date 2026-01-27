@@ -1,4 +1,4 @@
-import mongoose, { Schema, models, model } from "mongoose";
+import mongoose, { Schema, models } from "mongoose";
 
 const NewsSchema = new Schema(
   {
@@ -7,29 +7,37 @@ const NewsSchema = new Schema(
       required: true,
       trim: true,
     },
+
     slug: {
       type: String,
       required: true,
       unique: true,
     },
+
     excerpt: {
       type: String,
       required: true,
-      maxlength: 300,
     },
+
     content: {
       type: String,
       required: true,
     },
-    images: [
-      {
-        url: String,
-        publicId: String,
-      },
-    ],
-    published: {
+
+    image: {
+      type: String, // Cloudinary URL
+      required: false,
+    },
+
+    category: {
+      type: String,
+      enum: ["Mission", "Event", "Outreach", "Testimony", "Announcement"],
+      default: "Announcement",
+    },
+
+    isPublished: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   {
@@ -37,5 +45,4 @@ const NewsSchema = new Schema(
   }
 );
 
-export const News =
-  models.News || model("News", NewsSchema);
+export const News = models.News || mongoose.model("News", NewsSchema);

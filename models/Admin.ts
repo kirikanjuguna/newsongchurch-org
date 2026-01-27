@@ -1,4 +1,4 @@
-import mongoose, { Schema, models, model } from "mongoose";
+import mongoose, { Schema, models } from "mongoose";
 
 const AdminSchema = new Schema(
   {
@@ -13,15 +13,9 @@ const AdminSchema = new Schema(
       type: String,
       required: true,
     },
-    role: {
-      type: String,
-      default: "admin",
-    },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 export const Admin =
-  models.Admin || model("Admin", AdminSchema);
+  models.Admin || mongoose.model("Admin", AdminSchema);

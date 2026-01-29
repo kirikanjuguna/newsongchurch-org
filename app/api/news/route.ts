@@ -1,119 +1,91 @@
-// app/api/news/route.ts
 import { NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { News } from "@/models/News";
 import { getAdminFromRequest } from "@/lib/auth";
 import slugify from "slugify";
 import { cloudinary } from "@/lib/cloudinary";
-import { IncomingForm } from "formidable"; // ✅ Updated import
 
-// Disable Next.js default body parsing (we handle multipart/form-data ourselves)
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
-
-// GET all published news (PUBLIC)
-export async function GET() {
+// GET news (public or admin)
+export async function GET(req: Request) {
   await connectDB();
 
+  const { searchParams } = new URL(req.url);
+  const isAdminRequest = searchParams.get("admin") === "true";
+
+  // 🔐 Admin: return all news
+  if (isAdminRequest) {
+    await getAdminFromRequest();
+
+    const news = await News.find().sort({ createdAt: -1 });
+
+    return NextResponse.json({ success: true, news });
+  }
+
+  // 🌍 Public: published only
   const news = await News.find({ isPublished: true }).sort({
     createdAt: -1,
   });
 
-  return NextResponse.json({
-    success: true,
-    news,
-  });
+  return NextResponse.json({ success: true, news });
 }
 
-// CREATE news (ADMIN ONLY) with optional images
+// ADMIN – create news
 export async function POST(req: Request) {
   try {
-    // 🔐 Verify admin via HttpOnly cookie
-    const admin = await getAdminFromRequest();
-
+    await getAdminFromRequest();
     await connectDB();
 
-    // Parse multipart/form-data using formidable
-    const form = new IncomingForm({ multiples: true });
-    const { fields, files }: any = await new Promise((resolve, reject) => {
-      form.parse(req as any, (err, fields, files) => {
-        if (err) reject(err);
-        else resolve({ fields, files });
-      });
-    });
+    const formData = await req.formData();
 
-    // Validate required fields
-    const requiredFields = ["title", "excerpt", "content", "category"];
-    for (const field of requiredFields) {
-      if (!fields[field]) {
-        return NextResponse.json(
-          { success: false, message: `${field} is required` },
-          { status: 400 }
-        );
-      }
-    }
+    const title = formData.get("title") as string;
+    const excerpt = formData.get("excerpt") as string;
+    const content = formData.get("content") as string;
+    const category = formData.get("category") as string;
+    const isPublished = formData.get("isPublished") === "true";
 
-    // Validate category against allowed enum values in the schema
-    const allowedCategories = News.schema.path("category").enumValues;
-    if (!allowedCategories.includes(fields.category)) {
+    if (!title || !excerpt || !content || !category) {
       return NextResponse.json(
-        {
-          success: false,
-          message: `Category must be one of: ${allowedCategories.join(", ")}`,
-        },
+        { success: false, message: "Missing required fields" },
         { status: 400 }
       );
     }
 
-    // Generate slug from title if not provided
-    const slug = fields.slug ? fields.slug : slugify(fields.title, { lower: true });
+    const slug = slugify(title, { lower: true });
 
-    // Prepare news object
-    const newsData: any = {
-      title: fields.title,
-      excerpt: fields.excerpt,
-      content: fields.content,
-      category: fields.category,
-      isPublished: fields.isPublished === "true" || fields.isPublished === true,
-      slug,
-      createdBy: admin.id,
-    };
+    const images: string[] = [];
+    const files = formData.getAll("images") as File[];
 
-    // Upload images if provided
-    const images = files.images
-      ? Array.isArray(files.images)
-        ? files.images
-        : [files.images]
-      : [];
+    for (const file of files) {
+      if (!file || typeof file === "string") continue;
 
-    if (images.length > 0) {
-      newsData.images = [];
-      for (const image of images) {
-        const uploadResult = await cloudinary.uploader.upload(
-          image.filepath || image.path,
-          { folder: "news" }
-        );
-        newsData.images.push(uploadResult.secure_url);
-      }
+      const buffer = Buffer.from(await file.arrayBuffer());
+
+      const upload = await new Promise<any>((resolve, reject) => {
+        cloudinary.uploader
+          .upload_stream({ folder: "news" }, (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+          })
+          .end(buffer);
+      });
+
+      images.push(upload.secure_url);
     }
 
-    // Create news document
-    const news = await News.create(newsData);
-
-    return NextResponse.json({
-      success: true,
-      message: "News created successfully",
-      news,
+    const news = await News.create({
+      title,
+      slug,
+      excerpt,
+      content,
+      category,
+      isPublished,
+      images,
     });
-  } catch (error: any) {
+
+    return NextResponse.json({ success: true, news });
+  } catch (err: any) {
     return NextResponse.json(
-      {
-        success: false,
-        message: error.message || "Unauthorized",
-      },
+      { success: false, message: err.message || "Unauthorized" },
       { status: 401 }
     );
   }

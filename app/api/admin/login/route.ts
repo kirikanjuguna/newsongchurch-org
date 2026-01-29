@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { cookies } from "next/headers";
 import { connectDB } from "@/lib/mongodb";
 import { Admin } from "@/models/Admin";
 import { signToken } from "@/lib/auth";
@@ -10,6 +9,13 @@ export async function POST(req: Request) {
     await connectDB();
 
     const { email, password } = await req.json();
+
+    if (!email || !password) {
+      return NextResponse.json(
+        { success: false, message: "Email and password are required" },
+        { status: 400 }
+      );
+    }
 
     const admin = await Admin.findOne({ email });
     if (!admin) {
@@ -32,8 +38,16 @@ export async function POST(req: Request) {
       email: admin.email,
     });
 
-    const cookieStore = await cookies();
-    cookieStore.set({
+    const response = NextResponse.json({
+      success: true,
+      message: "Login successful",
+      admin: {
+        id: admin._id.toString(),
+        email: admin.email,
+      },
+    });
+
+    response.cookies.set({
       name: "admin_token",
       value: token,
       httpOnly: true,
@@ -43,14 +57,7 @@ export async function POST(req: Request) {
       maxAge: 60 * 60 * 24, // 1 day
     });
 
-    return NextResponse.json({
-      success: true,
-      message: "Login successful",
-      admin: {
-        id: admin._id,
-        email: admin.email,
-      },
-    });
+    return response;
   } catch (error) {
     console.error("LOGIN ERROR:", error);
     return NextResponse.json(

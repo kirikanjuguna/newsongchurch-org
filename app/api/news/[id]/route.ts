@@ -4,90 +4,88 @@ import { News } from "@/models/News";
 import { getAdminFromRequest } from "@/lib/auth";
 import slugify from "slugify";
 import { cloudinary } from "@/lib/cloudinary";
-import { IncomingForm } from "formidable";
 
-// Disable Next.js default body parsing (we handle multipart/form-data ourselves)
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-};
+/* ================= GET SINGLE NEWS ================= */
 
-// GET a single news item (ADMIN)
-export async function GET(req: Request, { params }: { params: { id: string } }) {
+export async function GET(
+  _req: Request,
+  context: { params: Promise<{ id: string }> }
+) {
+  const { id } = await context.params;
+
   await connectDB();
-  try {
-    const news = await News.findById(params.id);
-    if (!news) {
-      return NextResponse.json({ success: false, message: "News not found" }, { status: 404 });
-    }
-    return NextResponse.json({ success: true, news });
-  } catch (err: any) {
-    return NextResponse.json({ success: false, message: err.message || "Error fetching news" }, { status: 500 });
+
+  const news = await News.findById(id);
+
+  if (!news) {
+    return NextResponse.json(
+      { success: false, message: "Not found" },
+      { status: 404 }
+    );
   }
+
+  return NextResponse.json({ success: true, news });
 }
 
-// UPDATE news (ADMIN ONLY)
-export async function PUT(req: Request, { params }: { params: { id: string } }) {
+/* ================= UPDATE NEWS ================= */
+
+export async function PUT(
+  req: Request,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
-    const admin = await getAdminFromRequest(); // Verify admin
+    const { id } = await context.params;
+
+    await getAdminFromRequest();
     await connectDB();
 
-    const form = new IncomingForm({ multiples: true });
-    const { fields, files }: any = await new Promise((resolve, reject) => {
-      form.parse(req as any, (err, fields, files) => {
-        if (err) reject(err);
-        else resolve({ fields, files });
-      });
-    });
-
-    const news = await News.findById(params.id);
+    const news = await News.findById(id);
     if (!news) {
-      return NextResponse.json({ success: false, message: "News not found" }, { status: 404 });
+      return NextResponse.json(
+        { success: false, message: "Not found" },
+        { status: 404 }
+      );
     }
 
-    // Update fields
-    const allowedFields = ["title", "excerpt", "content", "category", "isPublished"];
-    for (const key of allowedFields) {
-      if (fields[key] !== undefined) {
-        if (key === "isPublished") {
-          news[key] = fields[key] === "true" || fields[key] === true;
-        } else {
-          news[key] = fields[key];
-        }
-      }
+    const formData = await req.formData();
+
+    const title = formData.get("title") as string | null;
+    if (title && title !== news.title) {
+      news.title = title;
+      news.slug = slugify(title, { lower: true });
     }
 
-    // Update slug if title changed
-    if (fields.title && fields.title !== news.title) {
-      news.slug = slugify(fields.title, { lower: true });
-    }
+    news.excerpt = (formData.get("excerpt") as string) ?? news.excerpt;
+    news.content = (formData.get("content") as string) ?? news.content;
+    news.category = (formData.get("category") as string) ?? news.category;
+    news.isPublished = formData.get("isPublished") === "true";
 
-    // Handle images
-    const existingImages = Array.isArray(fields.existingImages)
-      ? fields.existingImages
-      : fields.existingImages
-      ? [fields.existingImages]
-      : [];
+    const existingImages = formData.getAll("existingImages") as string[];
+    const newFiles = formData.getAll("images") as File[];
 
-    const newImages = files.images
-      ? Array.isArray(files.images)
-        ? files.images
-        : [files.images]
-      : [];
+    const uploadedImages: string[] = [];
 
-    // Upload new images to Cloudinary
-    for (const image of newImages) {
-      const uploadResult = await cloudinary.uploader.upload(image.filepath || image.path, {
-        folder: "news",
+    for (const file of newFiles) {
+      if (!file || typeof file === "string") continue;
+
+      const buffer = Buffer.from(await file.arrayBuffer());
+
+      const upload = await new Promise<any>((resolve, reject) => {
+        cloudinary.uploader
+          .upload_stream({ folder: "news" }, (err, result) => {
+            if (err) reject(err);
+            else resolve(result);
+          })
+          .end(buffer);
       });
-      existingImages.push(uploadResult.secure_url);
+
+      uploadedImages.push(upload.secure_url);
     }
 
-    news.images = existingImages;
+    news.images = [...existingImages, ...uploadedImages];
     await news.save();
 
-    return NextResponse.json({ success: true, message: "News updated successfully", news });
+    return NextResponse.json({ success: true, news });
   } catch (err: any) {
     return NextResponse.json(
       { success: false, message: err.message || "Unauthorized" },
@@ -96,35 +94,42 @@ export async function PUT(req: Request, { params }: { params: { id: string } }) 
   }
 }
 
-// DELETE news (ADMIN ONLY)
-export async function DELETE(req: Request, { params }: { params: { id: string } }) {
+/* ================= DELETE NEWS ================= */
+
+export async function DELETE(
+  _req: Request,
+  context: { params: Promise<{ id: string }> }
+) {
   try {
-    const admin = await getAdminFromRequest(); // Verify admin
+    const { id } = await context.params;
+
+    await getAdminFromRequest();
     await connectDB();
 
-    const news = await News.findById(params.id);
+    const news = await News.findById(id);
     if (!news) {
-      return NextResponse.json({ success: false, message: "News not found" }, { status: 404 });
+      return NextResponse.json(
+        { success: false, message: "Not found" },
+        { status: 404 }
+      );
     }
 
-    // Delete images from Cloudinary
-    if (news.images && news.images.length > 0) {
-      for (const imageUrl of news.images) {
-        try {
-          const publicId = imageUrl
-            .split("/")
-            .slice(-1)[0]
-            .split(".")[0]; // extract file name without extension
-          await cloudinary.uploader.destroy(`news/${publicId}`);
-        } catch (err) {
-          console.warn("Failed to delete image from Cloudinary:", imageUrl);
-        }
+    /* Delete Cloudinary images safely */
+    for (const url of news.images) {
+      try {
+        const parts = url.split("/");
+        const filename = parts[parts.length - 1];
+        const publicId = `news/${filename.split(".")[0]}`;
+
+        await cloudinary.uploader.destroy(publicId);
+      } catch {
+        // Fail silently per image (never block delete)
       }
     }
 
     await news.deleteOne();
 
-    return NextResponse.json({ success: true, message: "News deleted successfully" });
+    return NextResponse.json({ success: true });
   } catch (err: any) {
     return NextResponse.json(
       { success: false, message: err.message || "Unauthorized" },

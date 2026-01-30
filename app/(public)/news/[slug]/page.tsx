@@ -16,9 +16,12 @@ async function getNewsItem(slug: string) {
 export default async function NewsArticle({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const news = await getNewsItem(params.slug);
+  // ✅ NEW Next.js 16 fix
+  const { slug } = await params;
+
+  const news = await getNewsItem(slug);
 
   if (!news) return notFound();
 

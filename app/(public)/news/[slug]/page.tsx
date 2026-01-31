@@ -1,10 +1,9 @@
 import { notFound } from "next/navigation";
 
 async function getNewsItem(slug: string) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/news`,
-    { cache: "no-store" }
-  );
+  const res = await fetch(`${process.env.NEXTAUTH_URL || ""}/api/news`, {
+    cache: "no-store",
+  });
 
   if (!res.ok) throw new Error("Failed to fetch news");
 
@@ -16,12 +15,9 @@ async function getNewsItem(slug: string) {
 export default async function NewsArticle({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }) {
-  // ✅ NEW Next.js 16 fix
-  const { slug } = await params;
-
-  const news = await getNewsItem(slug);
+  const news = await getNewsItem(params.slug);
 
   if (!news) return notFound();
 

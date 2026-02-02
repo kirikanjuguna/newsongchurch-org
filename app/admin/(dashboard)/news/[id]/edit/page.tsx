@@ -10,47 +10,48 @@ interface NewsData {
   content: string;
   category: string;
   isPublished: boolean;
-  images: string[]; // URLs of uploaded images
+  images: string[];
 }
 
-const categories = ["Mission", "Church", "Event", "Announcement"]; // replace with your actual categories
+interface ApiResponse {
+  success: boolean;
+  message?: string;
+  news?: NewsData;
+}
+
+const categories = ["Mission", "Church", "Event", "Announcement"];
 
 const EditNewsPage: React.FC = () => {
-  const { id } = useParams(); // get news ID from URL
+  const { id } = useParams();
   const router = useRouter();
 
-  const [formData, setFormData] = useState<{
-    title: string;
-    excerpt: string;
-    content: string;
-    category: string;
-    isPublished: boolean;
-    newImages: File[];
-    existingImages: string[];
-  }>({
+  const [formData, setFormData] = useState({
     title: "",
     excerpt: "",
     content: "",
     category: "Mission",
     isPublished: true,
-    newImages: [],
-    existingImages: [],
+    newImages: [] as File[],
+    existingImages: [] as string[],
   });
 
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
 
-  // Fetch news details on mount
+  /* ================= FETCH NEWS ================= */
+
   useEffect(() => {
     if (!id) return;
+
     const fetchNews = async () => {
       try {
-        const res = await axios.get<{ success: boolean; news: NewsData }>(
-          `/api/news/${id}`,
-          { withCredentials: true }
-        );
-        if (res.data.success) {
+        const res = await axios.get<ApiResponse>(`/api/news/${id}`, {
+          withCredentials: true,
+        });
+
+        if (res.data.success && res.data.news) {
           const news = res.data.news;
+
           setFormData({
             title: news.title,
             excerpt: news.excerpt,
@@ -62,18 +63,22 @@ const EditNewsPage: React.FC = () => {
           });
         }
       } catch (err: any) {
-        setMessage(err.response?.data?.message || err.message || "Failed to load news");
+        setMessage(err.response?.data?.message || "Failed to load news");
       }
     };
+
     fetchNews();
   }, [id]);
 
+  /* ================= FORM HANDLERS ================= */
+
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
-    const target = e.target as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
-    const { name, value, type } = target;
-    const checked = (target as HTMLInputElement).checked;
+    const { name, value, type } = e.target;
+    const checked = (e.target as HTMLInputElement).checked;
 
     setFormData({
       ...formData,
@@ -82,13 +87,15 @@ const EditNewsPage: React.FC = () => {
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setFormData({
-        ...formData,
-        newImages: Array.from(e.target.files),
-      });
-    }
+    if (!e.target.files) return;
+
+    setFormData({
+      ...formData,
+      newImages: [...formData.newImages, ...Array.from(e.target.files)],
+    });
   };
+
+  /* ================= REMOVE IMAGES ================= */
 
   const removeExistingImage = (url: string) => {
     setFormData({
@@ -97,6 +104,18 @@ const EditNewsPage: React.FC = () => {
     });
   };
 
+  const removeNewImage = (index: number) => {
+    const updated = [...formData.newImages];
+    updated.splice(index, 1);
+
+    setFormData({
+      ...formData,
+      newImages: updated,
+    });
+  };
+
+  /* ================= SUBMIT ================= */
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -104,152 +123,183 @@ const EditNewsPage: React.FC = () => {
 
     try {
       const data = new FormData();
+
       data.append("title", formData.title);
       data.append("excerpt", formData.excerpt);
       data.append("content", formData.content);
       data.append("category", formData.category);
       data.append("isPublished", String(formData.isPublished));
 
-      // Include new images
       formData.newImages.forEach((file) => {
         data.append("images", file);
       });
 
-      // Include existing images URLs
       formData.existingImages.forEach((url) => {
         data.append("existingImages", url);
       });
 
-      const res = await axios.put<{ success: boolean; news?: NewsData; message?: string }>(
-        `/api/news/${id}`,
-        data,
-        {
-          withCredentials: true,
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      const res = await axios.put<ApiResponse>(`/api/news/${id}`, data, {
+        withCredentials: true,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       if (res.data.success) {
-        setMessage("News updated successfully!");
-        // Optionally redirect to admin/news page
         router.push("/admin/news");
       } else {
-        setMessage(res.data.message || "Failed to update news");
+        setMessage(res.data.message || "Update failed");
       }
     } catch (err: any) {
-      setMessage(err.response?.data?.message || err.message || "Something went wrong");
+      setMessage(err.response?.data?.message || "Something went wrong");
     } finally {
       setLoading(false);
     }
   };
 
+  /* ================= UI ================= */
+
   return (
-    <div className="p-6 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Edit News</h1>
-      {message && <p className="mb-4 text-red-600">{message}</p>}
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="max-w-4xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6">Edit News</h1>
+
+      {message && (
+        <p className="mb-4 text-red-600 font-medium">{message}</p>
+      )}
+
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-6 bg-[var(--color-surface)] p-6 rounded-xl shadow"
+      >
+        {/* TITLE */}
         <div>
-          <label className="block font-medium mb-1">Title</label>
+          <label className="block font-semibold mb-1">Title</label>
           <input
-            type="text"
             name="title"
             value={formData.title}
             onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
+            className="w-full border border-[var(--color-secondary)] rounded px-3 py-2"
             required
           />
         </div>
 
+        {/* EXCERPT */}
         <div>
-          <label className="block font-medium mb-1">Excerpt</label>
+          <label className="block font-semibold mb-1">Excerpt</label>
           <textarea
             name="excerpt"
             value={formData.excerpt}
             onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
+            className="w-full border border-[var(--color-secondary)] rounded px-3 py-2"
             required
           />
         </div>
 
+        {/* CONTENT */}
         <div>
-          <label className="block font-medium mb-1">Content</label>
+          <label className="block font-semibold mb-1">Content</label>
           <textarea
             name="content"
             value={formData.content}
+            rows={8}
             onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
+            className="w-full border border-[var(--color-secondary)] rounded px-3 py-2"
             required
           />
         </div>
 
+        {/* CATEGORY */}
         <div>
-          <label className="block font-medium mb-1">Category</label>
+          <label className="block font-semibold mb-1">Category</label>
           <select
             name="category"
             value={formData.category}
             onChange={handleChange}
-            className="w-full border px-3 py-2 rounded"
+            className="w-full border border-[var(--color-secondary)] rounded px-3 py-2"
           >
             {categories.map((cat) => (
-              <option key={cat} value={cat}>
-                {cat}
-              </option>
+              <option key={cat}>{cat}</option>
             ))}
           </select>
         </div>
 
-        <div>
-          <label className="inline-flex items-center">
-            <input
-              type="checkbox"
-              name="isPublished"
-              checked={formData.isPublished}
-              onChange={handleChange}
-              className="mr-2"
-            />
-            Publish
-          </label>
-        </div>
+        {/* PUBLISH */}
+        <label className="flex items-center gap-2 font-medium">
+          <input
+            type="checkbox"
+            name="isPublished"
+            checked={formData.isPublished}
+            onChange={handleChange}
+          />
+          Publish
+        </label>
 
+        {/* IMAGE UPLOAD */}
         <div>
-          <label className="block font-medium mb-1">Images</label>
+          <label className="block font-semibold mb-2">Upload Images</label>
+
           <input
             type="file"
-            name="images"
             multiple
             accept="image/*"
             onChange={handleFileChange}
           />
-          {formData.newImages.length > 0 && (
-            <p className="mt-2 text-sm text-gray-600">
-              {formData.newImages.length} new file(s) selected
-            </p>
-          )}
-          {formData.existingImages.length > 0 && (
-            <div className="mt-2">
-              <p className="text-sm font-medium mb-1">Existing Images:</p>
-              <div className="flex flex-wrap gap-2">
-                {formData.existingImages.map((url) => (
-                  <div key={url} className="relative">
-                    <img src={url} alt="" className="w-24 h-24 object-cover rounded" />
-                    <button
-                      type="button"
-                      onClick={() => removeExistingImage(url)}
-                      className="absolute top-0 right-0 bg-red-600 text-white px-1 rounded"
-                    >
-                      X
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
 
+        {/* EXISTING IMAGES */}
+        {formData.existingImages.length > 0 && (
+          <div>
+            <h3 className="font-semibold mb-2">Existing Images</h3>
+
+            <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
+              {formData.existingImages.map((url) => (
+                <div key={url} className="relative">
+                  <img
+                    src={url}
+                    className="w-full h-28 object-cover rounded"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => removeExistingImage(url)}
+                    className="absolute top-1 right-1 bg-red-600 text-white px-2 rounded text-sm"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* NEW IMAGE PREVIEW */}
+        {formData.newImages.length > 0 && (
+          <div>
+            <h3 className="font-semibold mb-2">New Images</h3>
+
+            <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
+              {formData.newImages.map((file, index) => (
+                <div key={index} className="relative">
+                  <img
+                    src={URL.createObjectURL(file)}
+                    className="w-full h-28 object-cover rounded"
+                  />
+
+                  <button
+                    type="button"
+                    onClick={() => removeNewImage(index)}
+                    className="absolute top-1 right-1 bg-red-600 text-white px-2 rounded text-sm"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* SUBMIT */}
         <button
-          type="submit"
           disabled={loading}
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="bg-[var(--color-accent)] hover:opacity-90 text-[var(--color-foreground)] px-6 py-2 rounded font-semibold"
         >
           {loading ? "Updating..." : "Update News"}
         </button>

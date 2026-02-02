@@ -85,7 +85,7 @@ const AdminNewsList: React.FC = () => {
 
   return (
     <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Manage News</h1>
+      <h1 className="text-2xl text-foreground font-bold mb-4">Manage News</h1>
 
       {message && <p className="mb-4 text-red-600">{message}</p>}
 

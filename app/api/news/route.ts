@@ -5,31 +5,46 @@ import { getAdminFromRequest } from "@/lib/auth";
 import slugify from "slugify";
 import { cloudinary } from "@/lib/cloudinary";
 
-// GET news (public or admin)
+export const runtime = "nodejs"; // Required for Buffer + Cloudinary stream
+
+/* ------------------------------------------------ */
+/* GET NEWS */
+/* ------------------------------------------------ */
+
 export async function GET(req: Request) {
-  await connectDB();
+  try {
+    await connectDB();
 
-  const { searchParams } = new URL(req.url);
-  const isAdminRequest = searchParams.get("admin") === "true";
+    const { searchParams } = new URL(req.url);
+    const isAdminRequest = searchParams.get("admin") === "true";
 
-  // 🔐 Admin: return all news
-  if (isAdminRequest) {
-    await getAdminFromRequest();
+    // 🔐 Admin gets ALL news
+    if (isAdminRequest) {
+      await getAdminFromRequest();
 
-    const news = await News.find().sort({ createdAt: -1 });
+      const news = await News.find().sort({ createdAt: -1 });
+
+      return NextResponse.json({ success: true, news });
+    }
+
+    // 🌍 Public gets only published
+    const news = await News.find({ isPublished: true }).sort({
+      createdAt: -1,
+    });
 
     return NextResponse.json({ success: true, news });
+  } catch (error: any) {
+    return NextResponse.json(
+      { success: false, message: error.message },
+      { status: 500 }
+    );
   }
-
-  // 🌍 Public: published only
-  const news = await News.find({ isPublished: true }).sort({
-    createdAt: -1,
-  });
-
-  return NextResponse.json({ success: true, news });
 }
 
-// ADMIN – create news
+/* ------------------------------------------------ */
+/* POST CREATE NEWS */
+/* ------------------------------------------------ */
+
 export async function POST(req: Request) {
   try {
     await getAdminFromRequest();
@@ -50,7 +65,11 @@ export async function POST(req: Request) {
       );
     }
 
-    const slug = slugify(title, { lower: true });
+    /* ---------- SLUG ---------- */
+
+    const slug = slugify(title, { lower: true, strict: true });
+
+    /* ---------- IMAGE UPLOAD ---------- */
 
     const images: string[] = [];
     const files = formData.getAll("images") as File[];
@@ -58,19 +77,37 @@ export async function POST(req: Request) {
     for (const file of files) {
       if (!file || typeof file === "string") continue;
 
+      // Skip empty files
+      if (file.size === 0) continue;
+
+      // Optional size safety (10MB per file)
+      if (file.size > 10 * 1024 * 1024) {
+        return NextResponse.json(
+          { success: false, message: "Each image must be under 10MB" },
+          { status: 400 }
+        );
+      }
+
       const buffer = Buffer.from(await file.arrayBuffer());
 
-      const upload = await new Promise<any>((resolve, reject) => {
-        cloudinary.uploader
-          .upload_stream({ folder: "news" }, (err, result) => {
-            if (err) reject(err);
+      const uploadResult: any = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          {
+            folder: "news",
+          },
+          (error, result) => {
+            if (error) reject(error);
             else resolve(result);
-          })
-          .end(buffer);
+          }
+        );
+
+        stream.end(buffer);
       });
 
-      images.push(upload.secure_url);
+      images.push(uploadResult.secure_url);
     }
+
+    /* ---------- SAVE NEWS ---------- */
 
     const news = await News.create({
       title,
@@ -83,10 +120,12 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ success: true, news });
-  } catch (err: any) {
+  } catch (error: any) {
+    console.error("NEWS CREATE ERROR:", error);
+
     return NextResponse.json(
-      { success: false, message: err.message || "Unauthorized" },
-      { status: 401 }
+      { success: false, message: error.message || "Server error" },
+      { status: 500 }
     );
   }
 }

@@ -40,6 +40,7 @@ export async function PUT(
     await connectDB();
 
     const news = await News.findById(id);
+
     if (!news) {
       return NextResponse.json(
         { success: false, message: "Not found" },
@@ -49,7 +50,10 @@ export async function PUT(
 
     const formData = await req.formData();
 
+    /* -------- BASIC FIELDS -------- */
+
     const title = formData.get("title") as string | null;
+
     if (title && title !== news.title) {
       news.title = title;
       news.slug = slugify(title, { lower: true });
@@ -60,8 +64,32 @@ export async function PUT(
     news.category = (formData.get("category") as string) ?? news.category;
     news.isPublished = formData.get("isPublished") === "true";
 
+    /* -------- IMAGE LOGIC -------- */
+
     const existingImages = formData.getAll("existingImages") as string[];
     const newFiles = formData.getAll("images") as File[];
+
+    /* ---- Detect Removed Images ---- */
+
+    const removedImages = news.images.filter(
+      (img: string) => !existingImages.includes(img)
+    );
+
+    /* ---- Delete Removed Images From Cloudinary ---- */
+
+    for (const url of removedImages) {
+      try {
+        const parts = url.split("/");
+        const filename = parts[parts.length - 1];
+        const publicId = `news/${filename.split(".")[0]}`;
+
+        await cloudinary.uploader.destroy(publicId);
+      } catch {
+        // Never crash update if delete fails
+      }
+    }
+
+    /* ---- Upload New Images ---- */
 
     const uploadedImages: string[] = [];
 
@@ -82,7 +110,10 @@ export async function PUT(
       uploadedImages.push(upload.secure_url);
     }
 
+    /* ---- Final Merge ---- */
+
     news.images = [...existingImages, ...uploadedImages];
+
     await news.save();
 
     return NextResponse.json({ success: true, news });
@@ -107,6 +138,7 @@ export async function DELETE(
     await connectDB();
 
     const news = await News.findById(id);
+
     if (!news) {
       return NextResponse.json(
         { success: false, message: "Not found" },
@@ -114,7 +146,8 @@ export async function DELETE(
       );
     }
 
-    /* Delete Cloudinary images safely */
+    /* Delete ALL Cloudinary Images */
+
     for (const url of news.images) {
       try {
         const parts = url.split("/");
@@ -122,9 +155,7 @@ export async function DELETE(
         const publicId = `news/${filename.split(".")[0]}`;
 
         await cloudinary.uploader.destroy(publicId);
-      } catch {
-        // Fail silently per image (never block delete)
-      }
+      } catch {}
     }
 
     await news.deleteOne();

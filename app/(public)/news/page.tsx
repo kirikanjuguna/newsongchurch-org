@@ -1,4 +1,4 @@
-import Link from "next/link";
+import NewsItem from "@/components/news/NewsItem";
 
 async function getNews() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/news`, {
@@ -15,42 +15,34 @@ export default async function NewsPage() {
   const news = data.news || [];
 
   return (
-    <section className="max-w-6xl mx-auto px-4 py-16">
-      <h1 className="text-4xl font-bold mb-10">Latest News</h1>
+    <section className="py-24 bg-surface">
+      <div className="max-w-7xl mx-auto px-6">
 
-      {news.length === 0 && (
-        <p className="text-gray-500">No news published yet.</p>
-      )}
+        {/* Header */}
+        <div className="text-center mb-16">
+          <h1 className="text-4xl md:text-5xl font-semibold text-[#3f2d23]">
+            Latest News
+          </h1>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {news.map((item: any) => (
-          <Link key={item._id} href={`/news/${item.slug}`}>
-            <article className="border rounded-xl overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
-              
-              {/* Image */}
-              <img
-                src={item.images?.[0] || "/news-placeholder.jpg"}
-                alt={item.title}
-                className="w-full h-52 object-cover"
-              />
+          <p className="mt-4 text-lg text-secondary">
+            Stories, updates and announcements from our church
+          </p>
+        </div>
 
-              {/* Content */}
-              <div className="p-5">
-                <p className="text-sm text-gray-400 mb-2">
-                  {new Date(item.createdAt).toDateString()}
-                </p>
+        {/* Empty */}
+        {news.length === 0 && (
+          <p className="text-center text-secondary">
+            No news published yet.
+          </p>
+        )}
 
-                <h2 className="text-xl font-semibold mb-2 line-clamp-2">
-                  {item.title}
-                </h2>
+        {/* List */}
+        <div className="space-y-16">
+          {news.map((item: any) => (
+            <NewsItem key={item._id} item={item} />
+          ))}
+        </div>
 
-                <p className="text-gray-600 line-clamp-3">
-                  {item.excerpt}
-                </p>
-              </div>
-            </article>
-          </Link>
-        ))}
       </div>
     </section>
   );

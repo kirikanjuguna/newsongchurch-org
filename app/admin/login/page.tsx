@@ -48,7 +48,7 @@ export default function AdminLoginPage() {
         onSubmit={handleLogin}
         className="w-full max-w-md bg-zinc-900 p-8 rounded-lg"
       >
-        <h1 className="text-2xl font-bold mb-6">Admin Login</h1>
+        <h1 className="text-2xl font-bold mb-6">Newsong Admin Login</h1>
 
         {error && (
           <p className="mb-4 text-red-400">{error}</p>

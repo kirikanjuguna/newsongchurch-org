@@ -3,81 +3,60 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function AdminLoginPage() {
+export default function AdminLogin() {
   const router = useRouter();
-
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-
     setLoading(true);
     setError("");
 
-    try {
-      const res = await fetch("/api/admin/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+    const res = await fetch("/api/admin/login", {
+      method: "POST",
+      body: JSON.stringify({ password }),
+      headers: { "Content-Type": "application/json" },
+    });
 
-      const data = await res.json();
+    setLoading(false);
 
-      if (!data.success) {
-        throw new Error(data.message || "Login failed");
-      }
-
-      // Redirect to dashboard
-      router.push("/admin/news/list");
-      router.refresh();
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+    if (!res.ok) {
+      setError("Invalid password");
+      return;
     }
+
+    router.push("/admin/news");
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white">
+    <div className="min-h-screen flex items-center justify-center bg-background px-6">
       <form
         onSubmit={handleLogin}
-        className="w-full max-w-md bg-zinc-900 p-8 rounded-lg"
+        className="w-full max-w-md bg-surface rounded-3xl shadow-xl p-10 space-y-6"
       >
-        <h1 className="text-2xl font-bold mb-6">Newsong Admin Login</h1>
-
-        {error && (
-          <p className="mb-4 text-red-400">{error}</p>
-        )}
-
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full mb-4 p-3 rounded bg-zinc-800"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+        <h1 className="text-3xl font-semibold text-center">
+          Admin Login
+        </h1>
 
         <input
           type="password"
-          placeholder="Password"
-          className="w-full mb-6 p-3 rounded bg-zinc-800"
+          placeholder="Admin password"
+          className="w-full border border-(--color-secondary)/30 rounded-xl px-4 py-3 bg-background focus:outline-none focus:ring-2 focus:ring-accent"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          required
         />
 
+        {error && (
+          <p className="text-sm text-red-600 text-center">{error}</p>
+        )}
+
         <button
-          type="submit"
           disabled={loading}
-          className="w-full bg-white text-black p-3 rounded font-semibold"
+          className="w-full bg-accent text-foreground font-semibold py-3 rounded-xl hover:opacity-90 transition"
         >
-          {loading ? "Logging in..." : "Login"}
+          {loading ? "Signing in..." : "Login"}
         </button>
       </form>
     </div>

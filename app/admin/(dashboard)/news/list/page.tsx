@@ -1,150 +1,55 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import useSWR from "swr";
 import Link from "next/link";
 
-/* ================= TYPES ================= */
+const fetcher = (url: string) => fetch(url).then(r => r.json());
 
-interface NewsItem {
-  _id: string;
-  title: string;
-  excerpt: string;
-  category: string;
-  isPublished: boolean;
-  createdAt: string;
-}
+export default function NewsList() {
+  const { data, mutate } = useSWR("/api/news?admin=true", fetcher);
 
-interface NewsListResponse {
-  success: boolean;
-  news: NewsItem[];
-  message?: string;
-}
+  async function deleteItem(id: string) {
+    if (!confirm("Delete this news item?")) return;
+    await fetch(`/api/news/${id}`, { method: "DELETE" });
+    mutate();
+  }
 
-interface DeleteResponse {
-  success: boolean;
-  message?: string;
-}
-
-/* ================= COMPONENT ================= */
-
-const AdminNewsList: React.FC = () => {
-  const [newsList, setNewsList] = useState<NewsItem[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
-
-  const fetchNews = async () => {
-    setLoading(true);
-    setMessage(null);
-
-    try {
-      const res = await axios.get<NewsListResponse>(
-        "/api/news?admin=true",
-        { withCredentials: true }
-      );
-
-      if (res.data.success) {
-        setNewsList(res.data.news);
-      } else {
-        setMessage(res.data.message || "Failed to fetch news");
-      }
-    } catch (err: any) {
-      setMessage(
-        err.response?.data?.message || err.message || "Something went wrong"
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchNews();
-  }, []);
-
-  const handleDelete = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this news item?")) return;
-
-    try {
-      const res = await axios.delete<DeleteResponse>(
-        `/api/news/${id}`,
-        { withCredentials: true }
-      );
-
-      if (res.data.success) {
-        setNewsList((prev) => prev.filter((item) => item._id !== id));
-        setMessage("News deleted successfully");
-      } else {
-        setMessage(res.data.message || "Failed to delete news");
-      }
-    } catch (err: any) {
-      setMessage(
-        err.response?.data?.message || err.message || "Something went wrong"
-      );
-    }
-  };
+  const news = data?.news || [];
 
   return (
-    <div className="p-6 max-w-5xl mx-auto">
-      <h1 className="text-2xl text-foreground font-bold mb-4">Manage News</h1>
+    <div className="bg-surface rounded-3xl shadow-xl p-10">
+      <h1 className="text-3xl font-semibold mb-8">All News</h1>
 
-      {message && <p className="mb-4 text-red-600">{message}</p>}
+      <div className="space-y-6">
+        {news.map((n: any) => (
+          <div key={n._id} className="flex gap-6 items-center bg-background p-5 rounded-2xl">
 
-      <Link
-        href="/admin/news"
-        className="inline-block mb-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-      >
-        + Create New
-      </Link>
+            <img
+              src={n.images?.[0]}
+              className="w-28 h-28 object-cover rounded-xl"
+            />
 
-      {loading ? (
-        <p>Loading news...</p>
-      ) : newsList.length === 0 ? (
-        <p>No news found.</p>
-      ) : (
-        <table className="w-full border-collapse border border-gray-300">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="border px-4 py-2 text-left">Title</th>
-              <th className="border px-4 py-2 text-center">Category</th>
-              <th className="border px-4 py-2 text-center">Published</th>
-              <th className="border px-4 py-2 text-center">Created At</th>
-              <th className="border px-4 py-2 text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {newsList.map((news) => (
-              <tr key={news._id}>
-                <td className="border px-4 py-2">{news.title}</td>
-                <td className="border px-4 py-2 text-center">
-                  {news.category}
-                </td>
-                <td className="border px-4 py-2 text-center">
-                  {news.isPublished ? "Yes" : "No"}
-                </td>
-                <td className="border px-4 py-2 text-center">
-                  {new Date(news.createdAt).toLocaleString()}
-                </td>
-                <td className="border px-4 py-2 text-center space-x-2">
-                  <Link
-                    href={`/admin/news/${news._id}/edit`}
-                    className="bg-yellow-500 text-white px-2 py-1 rounded hover:bg-yellow-600"
-                  >
-                    Edit
-                  </Link>
-                  <button
-                    onClick={() => handleDelete(news._id)}
-                    className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+            <div className="flex-1">
+              <h2 className="font-semibold">{n.title}</h2>
+              <p className="text-sm text-secondary">{n.category}</p>
+            </div>
+
+            <Link
+              href={`/admin/news/${n._id}/edit`}
+              className="px-4 py-2 bg-accent text-background rounded-lg font-semibold hover:bg-accent/90 transition"
+            >
+              Edit
+            </Link>
+
+            <button
+              onClick={() => deleteItem(n._id)}
+              className="px-4 py-2 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition"
+            >
+              Delete
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
-};
-
-export default AdminNewsList;
+}

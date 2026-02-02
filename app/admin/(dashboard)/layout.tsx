@@ -1,34 +1,57 @@
-"use client";
+import Link from "next/link";
 
-import { useRouter } from "next/navigation";
-
-export default function AdminDashboardLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const router = useRouter();
-
-  async function handleLogout() {
-    await fetch("/api/admin/logout", { method: "POST" });
-    router.push("/admin/login");
-  }
-
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Admin Navbar */}
-      <div className="flex justify-between items-center px-6 py-4 bg-background text-white">
-        <h1 className="text-lg font-semibold">Admin Dashboard</h1>
+    <div className="min-h-screen bg-background text-foreground">
 
-        <button
-          onClick={handleLogout}
-          className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
-        >
-          Logout
-        </button>
-      </div>
+      {/* Top bar */}
+      <header className="
+        border-b border-secondary/20
+        bg-surface
+        sticky top-0 z-40
+      ">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+          <div className="flex items-center gap-6">
+            <Link href="/admin" className="font-bold text-lg text-[#3f2d23]">
+              Admin Dashboard
+            </Link>
 
-      <div className="p-6">{children}</div>
+            <Link href="/admin/news" className="text-secondary hover:text-[#3f2d23]">
+              Create News
+            </Link>
+
+            <Link href="/admin/news/list" className="text-secondary hover:text-[#3f2d23]">
+              All News
+            </Link>
+          </div>
+
+          {/* Logout */}
+          <form action="/api/auth/logout" method="POST">
+            <button className="
+              px-4 py-2
+              rounded-lg
+              bg-red-600
+              text-foreground
+              font-medium
+              hover:opacity-90
+              transition
+            ">
+              Logout
+            </button>
+          </form>
+
+        </div>
+      </header>
+
+      {/* Content */}
+      <main className="max-w-7xl mx-auto px-6 py-10">
+        {children}
+      </main>
+
     </div>
   );
 }

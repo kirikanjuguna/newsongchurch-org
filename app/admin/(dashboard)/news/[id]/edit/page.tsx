@@ -171,7 +171,7 @@ const EditNewsPage: React.FC = () => {
       >
         {/* TITLE */}
         <div>
-          <label className="block font-semibold mb-1">Title</label>
+          <label className="block font-semibold text-[#3f2d23] mb-1">Title</label>
           <input
             name="title"
             value={formData.title}
@@ -183,7 +183,7 @@ const EditNewsPage: React.FC = () => {
 
         {/* EXCERPT */}
         <div>
-          <label className="block font-semibold mb-1">Excerpt</label>
+          <label className="block font-semibold text-[#3f2d23] mb-1">Excerpt</label>
           <textarea
             name="excerpt"
             value={formData.excerpt}
@@ -195,7 +195,7 @@ const EditNewsPage: React.FC = () => {
 
         {/* CONTENT */}
         <div>
-          <label className="block font-semibold mb-1">Content</label>
+          <label className="block font-semibold text-[#3f2d23] mb-1">Content</label>
           <textarea
             name="content"
             value={formData.content}
@@ -208,7 +208,7 @@ const EditNewsPage: React.FC = () => {
 
         {/* CATEGORY */}
         <div>
-          <label className="block font-semibold mb-1">Category</label>
+          <label className="block font-semibold text-[#3f2d23] mb-1">Category</label>
           <select
             name="category"
             value={formData.category}
@@ -222,7 +222,7 @@ const EditNewsPage: React.FC = () => {
         </div>
 
         {/* PUBLISH */}
-        <label className="flex items-center gap-2 font-medium">
+        <label className="flex items-center gap-2 font-medium text-[#3f2d23]">
           <input
             type="checkbox"
             name="isPublished"
@@ -234,7 +234,7 @@ const EditNewsPage: React.FC = () => {
 
         {/* IMAGE UPLOAD */}
         <div>
-          <label className="block font-semibold mb-2">Upload Images</label>
+          <label className="block font-semibold text-[#3f2d23] mb-2">Upload Images</label>
 
           <input
             type="file"
@@ -247,7 +247,7 @@ const EditNewsPage: React.FC = () => {
         {/* EXISTING IMAGES */}
         {formData.existingImages.length > 0 && (
           <div>
-            <h3 className="font-semibold mb-2">Existing Images</h3>
+            <h3 className="font-semibold text-[#3f2d23] mb-2">Existing Images</h3>
 
             <div className="grid grid-cols-3 md:grid-cols-4 gap-3">
               {formData.existingImages.map((url) => (
@@ -299,7 +299,7 @@ const EditNewsPage: React.FC = () => {
         {/* SUBMIT */}
         <button
           disabled={loading}
-          className="bg-[var(--color-accent)] hover:opacity-90 text-[var(--color-foreground)] px-6 py-2 rounded font-semibold"
+          className="bg-(--color-accent) hover:opacity-90 text-(--color-foreground) px-6 py-2 rounded font-semibold"
         >
           {loading ? "Updating..." : "Update News"}
         </button>

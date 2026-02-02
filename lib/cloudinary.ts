@@ -6,4 +6,25 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET!,
 });
 
+export const uploadNewsImage = (buffer: Buffer) =>
+  new Promise<any>((resolve, reject) => {
+    const stream = cloudinary.uploader.upload_stream(
+      {
+        folder: "news",
+        resource_type: "image",
+        transformation: [
+          { width: 1600, crop: "limit" },
+          { quality: "auto" },
+          { fetch_format: "auto" },
+        ],
+      },
+      (error, result) => {
+        if (error) reject(error);
+        else resolve(result);
+      }
+    );
+
+    stream.end(buffer);
+  });
+
 export { cloudinary };

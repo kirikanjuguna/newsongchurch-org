@@ -4,20 +4,32 @@ const NewsSchema = new Schema(
   {
     title: { type: String, required: true, trim: true },
 
-    slug: { type: String, required: true, unique: true },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
+    },
 
     excerpt: { type: String, required: true },
 
     content: { type: String, required: true },
 
     images: {
-      type: [String], // ✅ ALWAYS ARRAY
+      type: [String],
       default: [],
     },
 
     category: {
       type: String,
-      enum: ["Mission", "Event", "Outreach", "Testimony", "Announcement", "Church"],
+      enum: [
+        "Mission",
+        "Event",
+        "Outreach",
+        "Testimony",
+        "Announcement",
+        "Church",
+      ],
       default: "Announcement",
     },
 

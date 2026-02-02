@@ -3,13 +3,20 @@ import { connectDB } from "@/lib/mongodb";
 import { News } from "@/models/News";
 import { getAdminFromRequest } from "@/lib/auth";
 import slugify from "slugify";
-import { cloudinary } from "@/lib/cloudinary";
+import { uploadNewsImage } from "@/lib/cloudinary";
 
-export const runtime = "nodejs"; // Required for Buffer + Cloudinary stream
+export const runtime = "nodejs";
 
-/* ------------------------------------------------ */
-/* GET NEWS */
-/* ------------------------------------------------ */
+const VALID_CATEGORIES = [
+  "Mission",
+  "Event",
+  "Outreach",
+  "Testimony",
+  "Announcement",
+  "Church",
+];
+
+/* ---------------- GET ---------------- */
 
 export async function GET(req: Request) {
   try {
@@ -18,32 +25,26 @@ export async function GET(req: Request) {
     const { searchParams } = new URL(req.url);
     const isAdminRequest = searchParams.get("admin") === "true";
 
-    // 🔐 Admin gets ALL news
     if (isAdminRequest) {
       await getAdminFromRequest();
-
       const news = await News.find().sort({ createdAt: -1 });
-
       return NextResponse.json({ success: true, news });
     }
 
-    // 🌍 Public gets only published
     const news = await News.find({ isPublished: true }).sort({
       createdAt: -1,
     });
 
     return NextResponse.json({ success: true, news });
-  } catch (error: any) {
+  } catch (e: any) {
     return NextResponse.json(
-      { success: false, message: error.message },
+      { success: false, message: e.message },
       { status: 500 }
     );
   }
 }
 
-/* ------------------------------------------------ */
-/* POST CREATE NEWS */
-/* ------------------------------------------------ */
+/* ---------------- POST ---------------- */
 
 export async function POST(req: Request) {
   try {
@@ -52,62 +53,54 @@ export async function POST(req: Request) {
 
     const formData = await req.formData();
 
-    const title = formData.get("title") as string;
-    const excerpt = formData.get("excerpt") as string;
-    const content = formData.get("content") as string;
-    const category = formData.get("category") as string;
+    const title = String(formData.get("title") || "");
+    const excerpt = String(formData.get("excerpt") || "");
+    const content = String(formData.get("content") || "");
+    const category = String(formData.get("category") || "");
     const isPublished = formData.get("isPublished") === "true";
 
-    if (!title || !excerpt || !content || !category) {
+    if (!title || !excerpt || !content) {
       return NextResponse.json(
         { success: false, message: "Missing required fields" },
         { status: 400 }
       );
     }
 
-    /* ---------- SLUG ---------- */
+    if (!VALID_CATEGORIES.includes(category)) {
+      return NextResponse.json(
+        { success: false, message: "Invalid category selected" },
+        { status: 400 }
+      );
+    }
 
-    const slug = slugify(title, { lower: true, strict: true });
+    /* ---------- SLUG SAFE ---------- */
 
-    /* ---------- IMAGE UPLOAD ---------- */
+    let baseSlug = slugify(title, { lower: true, strict: true });
+    let slug = baseSlug;
+    let counter = 1;
 
-    const images: string[] = [];
+    while (await News.findOne({ slug })) {
+      slug = `${baseSlug}-${counter++}`;
+    }
+
+    /* ---------- IMAGES ---------- */
+
     const files = formData.getAll("images") as File[];
+    const images: string[] = [];
 
     for (const file of files) {
-      if (!file || typeof file === "string") continue;
-
-      // Skip empty files
-      if (file.size === 0) continue;
-
-      // Optional size safety (10MB per file)
+      if (!file || file.size === 0) continue;
       if (file.size > 10 * 1024 * 1024) {
         return NextResponse.json(
-          { success: false, message: "Each image must be under 10MB" },
+          { success: false, message: "Image too large (10MB max)" },
           { status: 400 }
         );
       }
 
       const buffer = Buffer.from(await file.arrayBuffer());
-
-      const uploadResult: any = await new Promise((resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream(
-          {
-            folder: "news",
-          },
-          (error, result) => {
-            if (error) reject(error);
-            else resolve(result);
-          }
-        );
-
-        stream.end(buffer);
-      });
-
-      images.push(uploadResult.secure_url);
+      const result = await uploadNewsImage(buffer);
+      images.push(result.secure_url);
     }
-
-    /* ---------- SAVE NEWS ---------- */
 
     const news = await News.create({
       title,
@@ -120,11 +113,10 @@ export async function POST(req: Request) {
     });
 
     return NextResponse.json({ success: true, news });
-  } catch (error: any) {
-    console.error("NEWS CREATE ERROR:", error);
-
+  } catch (e: any) {
+    console.error(e);
     return NextResponse.json(
-      { success: false, message: error.message || "Server error" },
+      { success: false, message: e.message || "Server error" },
       { status: 500 }
     );
   }

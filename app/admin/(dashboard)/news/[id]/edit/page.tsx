@@ -19,7 +19,15 @@ interface ApiResponse {
   news?: NewsData;
 }
 
-const categories = ["Mission", "Church", "Event", "Announcement"];
+const categories = [
+  "Mission",
+  "Event",
+  "Outreach",
+  "Testimony",
+  "Announcement",
+  "Church",
+];
+
 
 const EditNewsPage: React.FC = () => {
   const { id } = useParams();
@@ -299,7 +307,8 @@ const EditNewsPage: React.FC = () => {
         {/* SUBMIT */}
         <button
           disabled={loading}
-          className="bg-(--color-accent) hover:opacity-90 text-(--color-foreground) px-6 py-2 rounded font-semibold"
+          className="bg-accent hover:opacity-90 text-foreground px-6 py-2 rounded font-semibold"
+
         >
           {loading ? "Updating..." : "Update News"}
         </button>

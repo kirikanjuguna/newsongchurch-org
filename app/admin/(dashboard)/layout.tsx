@@ -11,7 +11,7 @@ export default function AdminLayout({
       <header className="border-b border-secondary/20 bg-surface sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-          <div className="flex items-center gap-6 font-medium">
+          <div className="flex items-center gap-6 font-medium text-[#3f2d23]">
             <Link href="/admin/news" className="hover:opacity-80">
               Create News
             </Link>

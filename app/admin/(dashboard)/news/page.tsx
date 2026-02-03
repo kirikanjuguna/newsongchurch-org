@@ -17,75 +17,139 @@ export default function CreateNews() {
   const [msg, setMsg] = useState("");
 
   function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
-    if (!e.target.files) return;
-    setImages([...images, ...Array.from(e.target.files)]);
+    const files = e.target.files;
+    if (!files) return;
+    setImages((prev) => [...prev, ...Array.from(files)]);
   }
 
   function removeImage(i: number) {
-    setImages(images.filter((_, idx) => idx !== i));
+    setImages((prev) => prev.filter((_, idx) => idx !== i));
   }
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+
+    const form = e.currentTarget;
+
     setLoading(true);
     setMsg("");
 
-    const fd = new FormData(e.currentTarget);
-    images.forEach(f => fd.append("images", f));
+    const fd = new FormData(form);
+    images.forEach((f) => fd.append("images", f));
 
-    const res = await fetch("/api/news", { method: "POST", body: fd });
+    try {
+      const res = await fetch("/api/news", {
+        method: "POST",
+        body: fd,
+      });
+
+      setMsg(res.ok ? "News created successfully" : "Failed to create news");
+
+      if (res.ok) {
+        form.reset();
+        setImages([]);
+      }
+    } catch (err) {
+      console.error(err);
+      setMsg("Upload error");
+    }
 
     setLoading(false);
-    setMsg(res.ok ? "News created" : "Failed");
-
-    if (res.ok) {
-      e.currentTarget.reset();
-      setImages([]);
-    }
   }
 
   return (
-    <div className="bg-surface rounded-3xl shadow-xl p-10">
-      <h1 className="text-3xl font-semibold mb-8">Create News</h1>
+    <div className="bg-surface rounded-3xl shadow-xl p-10 max-w-3xl text-[#3f2d23]">
+
+      <h1 className="text-3xl font-semibold mb-8 text-[#3f2d23]">
+        Create News
+      </h1>
 
       <form onSubmit={handleSubmit} className="space-y-6">
 
-        <input name="title" required placeholder="Title" className={input}/>
-        <input name="excerpt" required placeholder="Excerpt" className={input}/>
+        <input
+          name="title"
+          required
+          placeholder="Title"
+          className={input}
+        />
 
-        <select name="category" className={input}>
-          {categories.map(c => <option key={c}>{c}</option>)}
+        <input
+          name="excerpt"
+          required
+          placeholder="Excerpt"
+          className={input}
+        />
+
+        <select name="category" required className={input}>
+          {categories.map((c) => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
         </select>
 
-        <textarea name="content" rows={6} required className={input}/>
+        <textarea
+          name="content"
+          rows={8}
+          required
+          placeholder="Content (HTML allowed)"
+          className={input}
+        />
 
-        <label className="flex gap-2 items-center">
-          <input type="checkbox" name="isPublished" value="true"/>
-          Publish
+        <label className="flex gap-3 items-center text-[#3f2d23]">
+          <input type="checkbox" name="isPublished" value="true" />
+          Publish now
         </label>
 
-        <input type="file" multiple onChange={handleImageChange} />
+        {/* IMAGE UPLOAD */}
 
-        <div className="grid grid-cols-3 gap-4">
-          {images.map((img,i)=>(
-            <div key={i} className="relative">
-              <img src={URL.createObjectURL(img)} className="h-40 w-full object-cover rounded-xl"/>
-              <button type="button" onClick={()=>removeImage(i)}
-                className="absolute top-2 right-2 bg-black/70 text-white px-2 rounded-full">
-                ✕
-              </button>
-            </div>
-          ))}
-        </div>
+        <input
+          type="file"
+          multiple
+          accept="image/*"
+          onChange={handleImageChange}
+          className="text-[#3f2d23]"
+        />
 
-        <button className="bg-accent text-foreground px-6 py-3 rounded-xl font-semibold">
-          {loading ? "Saving..." : "Create"}
+        {/* PREVIEW */}
+
+        {images.length > 0 && (
+          <div className="grid grid-cols-3 gap-4">
+            {images.map((img, i) => (
+              <div key={i} className="relative">
+                <img
+                  src={URL.createObjectURL(img)}
+                  className="h-36 w-full object-cover rounded-xl"
+                />
+                <button
+                  type="button"
+                  onClick={() => removeImage(i)}
+                  className="absolute top-2 right-2 bg-black/70 text-white px-2 rounded-full"
+                >
+                  ✕
+                </button>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <button
+          disabled={loading}
+          className="bg-accent text-foreground px-6 py-3 rounded-xl font-semibold disabled:opacity-50"
+        >
+          {loading ? "Saving..." : "Create News"}
         </button>
 
-        {msg && <p>{msg}</p>}
+        {msg && (
+          <p className="text-sm text-[#3f2d23]">
+            {msg}
+          </p>
+        )}
+
       </form>
     </div>
   );
 }
 
-const input = "w-full border border-secondary/30 rounded-xl px-4 py-3 bg-background";
+const input =
+  "w-full border border-secondary/30 rounded-xl px-4 py-3 bg-white text-[#3f2d23] placeholder:text-[#3f2d23]/60";

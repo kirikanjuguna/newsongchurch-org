@@ -18,7 +18,7 @@ export default function NewsList() {
 
   return (
     <div className="bg-surface rounded-3xl shadow-xl p-10">
-      <h1 className="text-3xl font-semibold mb-8">All News</h1>
+      <h1 className="text-3xl font-semibold text-[#3f2d23] mb-8">All News</h1>
 
       <div className="space-y-6">
         {news.map((n: any) => (

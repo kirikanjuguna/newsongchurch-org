@@ -100,6 +100,7 @@ export default async function Page({
             className="
               prose prose-lg
               max-w-none
+              text-[#3f2d23]
               prose-headings:text-foreground
               prose-p:text-secondary
               prose-a:text-accent
@@ -108,7 +109,7 @@ export default async function Page({
           />
 
           {/* Share */}
-          <div className="mt-14 pt-8 border-t border-border">
+          <div className="mt-14 pt-8 text-secondary border-t border-border">
             <NewsShare title={news.title} />
           </div>
 
@@ -118,10 +119,10 @@ export default async function Page({
       {/* ================= RELATED ================= */}
 
       {related.length > 0 && (
-        <section className="py-16 border-t border-border">
+        <section className="py-16 border-t text-secondary border-border">
           <div className="max-w-6xl mx-auto px-6">
 
-            <h3 className="text-2xl font-semibold mb-10">
+            <h3 className="text-2xl text-secondary font-semibold mb-10">
               Related Stories
             </h3>
 

@@ -96,7 +96,7 @@ export default function ContactPage() {
                 <button
                   type="submit"
                   className="inline-flex items-center justify-center
-                             rounded-xl bg-accent px-6 py-3 font-semibold
+                             rounded-xl bg-accent/60 px-6 py-3 font-semibold
                              text-accent-foreground transition
                              hover:opacity-90"
                 >
@@ -155,7 +155,7 @@ function Input({
       <input
         type={type}
         placeholder={placeholder}
-        className="w-full rounded-xl bg-white/10 border border-white/10
+        className="w-full rounded-xl bg-white/ border border-white/10
                    px-4 py-3 text-white placeholder:text-white/50
                    focus:outline-none focus:ring-2 focus:ring-accent"
       />

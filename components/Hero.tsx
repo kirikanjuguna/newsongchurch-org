@@ -1,8 +1,10 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 
+// Slides array with paths to optimized images
 const slides = [
   "/slide-1.jpg",
   "/slide-2.jpg",
@@ -29,17 +31,24 @@ export default function Hero() {
       <AnimatePresence mode="wait">
         <motion.div
           key={slides[index]}
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url('${slides[index]}')` }}
+          className="absolute inset-0"
           initial={{ opacity: 0, scale: 1.05 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 1.2, ease: "easeInOut" }}
-        />
+        >
+          <Image
+            src={slides[index]}
+            alt={`Slide ${index + 1}`}
+            fill
+            priority={index === 0} // load first slide immediately
+            className="object-cover"
+          />
+        </motion.div>
       </AnimatePresence>
 
       {/* Overlay: light at top, stronger at bottom */}
-      <div className="absolute inset-0 bg-linear-to-b from-black/20 via-black/40 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-background" />
 
       {/* Content (lower third) */}
       <motion.div

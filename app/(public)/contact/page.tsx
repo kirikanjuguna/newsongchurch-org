@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ContactPage() {
   const [form, setForm] = useState({
@@ -13,7 +13,18 @@ export default function ContactPage() {
   });
 
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState<string | null>(null);
+
+  const [status, setStatus] = useState<{
+    type: "success" | "error";
+    text: string;
+  } | null>(null);
+
+  // ✅ auto-hide status after 4s
+  useEffect(() => {
+    if (!status) return;
+    const t = setTimeout(() => setStatus(null), 4000);
+    return () => clearTimeout(t);
+  }, [status]);
 
   function updateField(key: string, value: string) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -36,13 +47,28 @@ export default function ContactPage() {
       const data = await res.json();
 
       if (data.success) {
-        setStatus("Message sent successfully ✅");
-        setForm({ name: "", email: "", subject: "", message: "" });
+        setStatus({
+          type: "success",
+          text: "Message sent successfully",
+        });
+
+        setForm({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+        });
       } else {
-        setStatus("Failed to send message ❌");
+        setStatus({
+          type: "error",
+          text: "Failed to send message",
+        });
       }
-    } catch (err) {
-      setStatus("Something went wrong ❌");
+    } catch {
+      setStatus({
+        type: "error",
+        text: "Something went wrong",
+      });
     } finally {
       setLoading(false);
     }
@@ -81,7 +107,7 @@ export default function ContactPage() {
           >
             <ContactItem icon={MapPin} title="Location" text="South C, Nairobi, Kenya" />
             <ContactItem icon={Phone} title="Phone" text="+254 700 000 000" />
-            <ContactItem icon={Mail} title="Email" text="info@newsongchurch.org" />
+            <ContactItem icon={Mail} title="Email" text="info@newsongchapel.org" />
 
             <p className="italic text-accent max-w-md">
               “Call to Me, and I will answer you, and show you great and mighty
@@ -150,16 +176,30 @@ export default function ContactPage() {
                   type="submit"
                   disabled={loading}
                   className="inline-flex items-center justify-center
-                             rounded-xl bg-accent/60 px-6 py-3 font-semibold
+                             rounded-xl bg-accent/70 px-6 py-3 font-semibold
                              text-accent-foreground transition
                              hover:opacity-90 disabled:opacity-50"
                 >
                   {loading ? "Sending..." : "Send Message"}
                 </button>
 
+                {/* ✅ Better status alert */}
                 {status && (
-                  <p className="text-sm text-white/80 pt-2">{status}</p>
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className={`rounded-xl px-4 py-3 text-sm font-medium border
+                      ${
+                        status.type === "success"
+                          ? "bg-green-500/10 border-green-500/30 text-green-300"
+                          : "bg-red-500/10 border-red-500/30 text-red-300"
+                      }`}
+                  >
+                    {status.type === "success" ? "✅ " : "❌ "}
+                    {status.text}
+                  </motion.div>
                 )}
+
               </form>
             </div>
           </motion.div>

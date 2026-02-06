@@ -7,7 +7,7 @@ import { Menu, X, Sun, Moon } from "lucide-react";
 const navLinks = [
   { name: "About Us", href: "/about" },
   { name: "Church", href: "/church" },
-  { name: "Mission Work", href: "/mission" },
+  { name: "Missions Work", href: "/mission" },
   { name: "Contact Us", href: "/contact" },
 ];
 
@@ -44,7 +44,7 @@ export default function Navbar() {
           href="/"
           className="text-lg font-semibold tracking-tight text-foreground"
         >
-          New Song Church
+          New Song Chapel
         </Link>
 
         {/* Desktop Nav */}
@@ -102,7 +102,7 @@ export default function Navbar() {
           {/* Header */}
           <div className="flex items-center justify-between h-16 px-6 border-b border-accent/40">
             <span className="font-semibold text-foreground">
-              New Song Church
+              New Song Chapel
             </span>
             <button
               onClick={() => setOpen(false)}

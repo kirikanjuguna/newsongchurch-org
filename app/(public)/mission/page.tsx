@@ -35,8 +35,8 @@ export default function MissionPage() {
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-6">
           <img
-            src="/mission/maasai-women.jpg"
-            alt="Maasai Women"
+            src="mission/eye-clinic.jpg"
+            alt="Eye Clinic"
             className="h-[520px] w-full object-cover rounded-2xl"
           />
           <div className="grid gap-6">
@@ -51,11 +51,11 @@ export default function MissionPage() {
               className="h-[250px] w-full object-cover rounded-2xl"
             />
           </div>
-          <img
+          {/*<img
             src="/mission/children.jpg"
             alt="Children Ministry"
             className="h-[520px] w-full object-cover rounded-2xl"
-          />
+          />*/}
         </div>
       </section>
 

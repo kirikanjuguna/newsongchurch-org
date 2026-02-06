@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 
 const highlights = [
   {
-    title: "Our Church",
+    title: "Church: New Song Chapel",
     description:
       "A Christ-centered church devoted to worship, discipleship, and spiritual growth.",
     href: "/church",
@@ -14,15 +14,15 @@ const highlights = [
     image: "/home/church.jpg",
   },
   {
-    title: "Community",
+    title: "Community: Mukuru",
     description:
-      "Serving families and individuals through outreach, compassion, and practical support.",
+      "Loving people and serving communities through outreach, compassion, and practical support.",
     href: "/community",
     icon: Users,
     image: "/home/community.jpg",
   },
   {
-    title: "Mission Work",
+    title: "Missions Work: Kenya",
     description:
       "Transforming lives through education, healthcare, and faith-driven missions.",
     href: "/mission",

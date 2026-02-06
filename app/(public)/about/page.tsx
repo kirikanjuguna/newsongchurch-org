@@ -24,7 +24,7 @@ export default function AboutPage() {
           className="max-w-3xl mb-20"
         >
           <h1 className="text-4xl md:text-5xl font-extrabold text-foreground tracking-tight">
-            About New Song Church
+            About New Song Chapel
           </h1>
           <p className="mt-4 text-lg text-muted-foreground leading-relaxed">
             A fellowship of believers committed to Christ, community, and

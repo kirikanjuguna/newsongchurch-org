@@ -10,14 +10,14 @@ const works = [
     description:
       "Empowering children through faith, learning, and joyful community activities.",
     image: "/vbs.jpg",
-    href: "/projects/vbs",
+    href: "/church",
   },
   {
     title: "Community Eye Clinic",
     description:
       "Providing accessible eye care and restoring vision to those in need.",
     image: "/eye-clinic.jpg",
-    href: "/projects/eye-clinic",
+    href: "/mission",
   },
 ];
 

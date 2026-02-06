@@ -58,7 +58,7 @@ export default function Hero() {
         className="relative w-full"
       >
         <div className="max-w-7xl mx-auto px-6 pb-56 text-center text-white">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold max-w-4xl mx-auto leading-tight">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold max-w-4xl mx-auto leading-tight">
             Serving God. <br className="hidden md:block" />
             Serving People. <br className="hidden md:block" />
             Transforming Communities.
@@ -66,7 +66,7 @@ export default function Hero() {
 
           <p className="mt-6 max-w-2xl mx-auto text-lg text-white/85">
             Sharing the love of Christ through worship, community outreach,
-            and mission-driven service.
+            and missions-driven service.
           </p>
         </div>
       </motion.div>

@@ -55,8 +55,11 @@ export default function ChurchPage() {
               and live out their faith with confidence and clarity.
             </p>
 
-            <span className="block mt-6 text-accent font-medium">
-              Acts 20:27
+            <span className="block mt-6 text-[#3f2d23] font-semibold">
+              ~ Acts 20:27
+            </span>
+            <span className="block text-[#3f2d23] italic">
+              "For I did not shrink from declaring to you the whole counsel of God."
             </span>
           </motion.div>
         </div>

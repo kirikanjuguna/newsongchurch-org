@@ -105,8 +105,8 @@ export default function ContactPage() {
             viewport={{ once: true }}
             className="space-y-10"
           >
-            <ContactItem icon={MapPin} title="Location" text="South C, Nairobi, Kenya" />
-            <ContactItem icon={Phone} title="Phone" text="+254 700 000 000" />
+            {/*<ContactItem icon={MapPin} title="Location" text="South C, Nairobi, Kenya" />*/}
+            <ContactItem icon={Phone} title="Phone" text="+254 707 010 030" />
             <ContactItem icon={Mail} title="Email" text="info@newsongchapel.org" />
 
             <p className="italic text-accent max-w-md">

@@ -59,9 +59,9 @@ export default function Hero() {
       >
         <div className="max-w-7xl mx-auto px-6 pb-56 text-center text-white">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold max-w-4xl mx-auto leading-tight">
-            Serving God. <br className="hidden md:block" />
-            Serving People. <br className="hidden md:block" />
-            Transforming Communities.
+           <span className="text-[0.5em] align-middle">Serving</span> God. <br className="hidden md:block" />
+            <span className="text-[0.5em] align-middle">Serving</span> People. <br className="hidden md:block" />
+            <span className="text-[0.5em] align-middle">Transforming</span> Communities.
           </h1>
 
           <p className="mt-6 max-w-2xl mx-auto text-lg text-white/85">

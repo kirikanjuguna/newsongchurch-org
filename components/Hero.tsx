@@ -65,7 +65,7 @@ export default function Hero() {
           </h1>
 
           <p className="mt-6 max-w-2xl mx-auto text-lg text-white/85">
-            Sharing the love of Christ through worship, community outreach,
+            Sharing the love of Christ through the word, community outreach,
             and missions-driven service.
           </p>
         </div>

@@ -84,10 +84,16 @@ export default function CommunityPage() {
             transition={{ duration: 0.6 }}
             className="text-4xl md:text-6xl font-bold mb-6"
           >
-            Community Fellowship in Christ — Mukuru
+            Community Fellowship in Christ.
+            <br/>
+            Welcome to our community of change.
+            Transforming lives one at a time
           </motion.h1>
 
-          <motion.p
+        </div>
+      </section>
+      <section>
+        |   <motion.p
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.6 }}
@@ -98,20 +104,6 @@ export default function CommunityPage() {
             happens one life at a time — and each restored life becomes a
             ripple of hope across families and the wider community.
           </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="mt-8 italic"
-          >
-            <p className="font-semibold">Jeremiah 29:7</p>
-            <p>
-              Seek the peace and prosperity of the city… Pray to the Lord for
-              it, because if it prospers, you too will prosper.
-            </p>
-          </motion.div>
-        </div>
       </section>
 
       {/* STORIES */}

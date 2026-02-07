@@ -23,9 +23,7 @@ export default function MissionPage() {
               transition={{ duration: 1 }}
               className="text-white text-4xl md:text-6xl font-bold leading-tight"
             >
-              15 YEARS OF MISSION
-              <br />
-              IN MUKURU & KITENGELA
+              15 YEARS OF MISSIONS WORK IN THE MUKURU COMMUNITY
             </motion.h1>
           </div>
         </div>
@@ -100,7 +98,7 @@ export default function MissionPage() {
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-6">
           {[
-            { title: "HEALTH", img: "/mission/eye-clinic.jpg" },
+            { title: "CARE", img: "/mission/eye-clinic.jpg" },
             { title: "EMPOWERMENT", img: "/mission/youth.jpg" },
             { title: "HOPE", img: "/mission/women-training.jpg" },
           ].map((item) => (
@@ -139,17 +137,18 @@ export default function MissionPage() {
             </h2>
 
             <p>
-              The people of the Mukuru slum are in desperate need of safe
-              drinking water. The physical water available is contaminated,
+              Water is life, but inorder for water to give life it must be
+              clean and safe for drinking. Unfortunately that is not the case 
+              for the Mukuru residents. The physical water available is contaminated,
               and water-borne disease is the leading cause of illness and
               death.
             </p>
 
             <p>
-              Through Missionary Don Arnold, New Song partnered with Water
-              Mission Kitale and brought Kohler Clarity water filters into the
-              Mukuru homes of our church members. To this day, these filters
-              continue to provide safe clean drinking water.
+              Over the years we have partnered with different well wishers like Don Arnold,
+              Water Mission and Business Connect to bring water filters to families
+              that need them the most. Many of our church members have benefited from these
+              water filters that provide clean and safe drinking water in their homes.
             </p>
           </div>
         </div>

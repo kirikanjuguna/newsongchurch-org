@@ -8,7 +8,7 @@ const highlights = [
   {
     title: "Church: New Song Chapel",
     description:
-      "A Christ-centered church devoted to worship, discipleship, and spiritual growth.",
+      "A Christ-centered church devoted to the word, discipleship, and spiritual growth.",
     href: "/church",
     icon: Church,
     image: "/home/church.jpg",
@@ -24,7 +24,7 @@ const highlights = [
   {
     title: "Missions Work: Kenya",
     description:
-      "Transforming lives through education, healthcare, and faith-driven missions.",
+      "Transforming lives one at a time. Caring and empowering people through faith-driven missions.",
     href: "/mission",
     icon: Globe,
     image: "/home/mission.jpg",

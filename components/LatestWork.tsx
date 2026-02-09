@@ -16,7 +16,7 @@ const works = [
     title: "Community Eye Clinic",
     description:
       "Providing accessible eye care and restoring vision to those in need.",
-    image: "/eye-clinic.jpg",
+    image: "/community-eye-clinic.jpg",
     href: "/mission",
   },
 ];

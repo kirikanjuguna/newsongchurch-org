@@ -267,6 +267,11 @@ export default function ChurchPage() {
               <h3 className="text-2xl font-semibold mb-4">
                 Women Ministry Leadership
               </h3>
+
+              <p>
+                Meet Valerie Kivayiru, overseeing women’s Bible studies through
+                book by book, chapter by chapter, and verse by verse devotion.
+              </p>
               <p>
                 The women’s ministry is led by dedicated women of faith who
                 disciple, mentor, and walk alongside others through prayer,
@@ -388,6 +393,31 @@ export default function ChurchPage() {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+            {/* ================= YOUTH & ALATS ================= */}
+      <section className="relative py-32">
+        <div className="absolute inset-0">
+          <img
+            src="/community/dance.jpg"
+            alt="ALATS Kenya Dancers"
+            className="w-full h-full object-cover md:object-[center_20%]"
+          />
+          <div className="absolute inset-0 bg-black/60" />
+        </div>
+
+        <div className="relative max-w-4xl mx-auto px-6 text-white">
+          <h2 className="text-3xl md:text-4xl font-semibold mb-6">
+            Youth Ministry – ALATS Kenya
+          </h2>
+
+          <p>
+            ALATS is a Hebrew word meaning “to jump for joy.” ALATS Kenya is a
+            youth dance ministry cultivating passion for dance while empowering
+            young people to communicate the Gospel through artistic excellence
+            in a safe, Spirit-filled environment.
+          </p>
         </div>
       </section>
 
@@ -515,30 +545,7 @@ export default function ChurchPage() {
       </section>
 
 
-      {/* ================= YOUTH & ALATS ================= */}
-      <section className="relative py-32">
-        <div className="absolute inset-0">
-          <img
-            src="/church/alats.jpg"
-            alt="ALATS Kenya Dancers"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/60" />
-        </div>
 
-        <div className="relative max-w-4xl mx-auto px-6 text-white">
-          <h2 className="text-3xl md:text-4xl font-semibold mb-6">
-            Youth Ministry – ALATS Kenya
-          </h2>
-
-          <p>
-            ALATS is a Hebrew word meaning “to jump for joy.” ALATS Kenya is a
-            youth dance ministry cultivating passion for dance while empowering
-            young people to communicate the Gospel through artistic excellence
-            in a safe, Spirit-filled environment.
-          </p>
-        </div>
-      </section>
 
       {/* ================= WOMEN MINISTRY ================= 
       <section className="py-24">

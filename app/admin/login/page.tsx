@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import Image from "next/image";
 
 export default function AdminLogin() {
   const router = useRouter();
@@ -61,6 +63,17 @@ export default function AdminLogin() {
           border border-secondary/20
         "
       >
+                {/* ✅ LOGO */}
+        <Link href="/" className="items-center">
+          <Image
+            src="/logo.svg"
+            alt="New Song Chapel Logo"
+            width={432}
+            height={93}
+            className="h-10 w-auto"
+            priority
+          />
+        </Link>
         <h1 className="text-3xl font-semibold text-center text-[#3f2d23]">
           Newsong Admin Login
         </h1>

@@ -443,8 +443,6 @@ export default function ChurchPage() {
               <ImageSlider
                 images={[
                   "/church/men-1.jpg",
-                  "/church/men-2.jpg",
-                  "/church/men-3.jpg",
                 ]}
               />
             </motion.div>
@@ -454,7 +452,7 @@ export default function ChurchPage() {
           <div className="grid md:grid-cols-2 gap-14 items-center">
             <div className="relative h-[360px] rounded-2xl overflow-hidden">
               <img
-                src="/church/men-leader.jpg"
+                src="/church/men-2.jpg"
                 alt="Men Ministry"
                 className="absolute inset-0 w-full h-full object-cover"
               />

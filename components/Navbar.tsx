@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Menu, X, Sun, Moon } from "lucide-react";
 
 const navLinks = [
@@ -16,7 +17,6 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
-  // Load theme from localStorage
   useEffect(() => {
     const theme = localStorage.getItem("theme");
     if (theme === "dark") {
@@ -40,12 +40,17 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-accent/40">
       <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        {/* Brand */}
-        <Link
-          href="/"
-          className="text-lg font-semibold tracking-tight text-foreground"
-        >
-          New Song Chapel
+
+        {/* ✅ LOGO */}
+        <Link href="/" className="flex items-center gap-3">
+          <Image
+            src="/logo.svg"
+            alt="New Song Chapel Logo"
+            width={432}
+            height={93}
+            className="h-10 w-auto"
+            priority
+          />
         </Link>
 
         {/* Desktop Nav */}
@@ -65,7 +70,6 @@ export default function Navbar() {
             </li>
           ))}
 
-          {/* Dark Mode Toggle Desktop */}
           <li>
             <button
               onClick={toggleDarkMode}
@@ -77,21 +81,16 @@ export default function Navbar() {
           </li>
         </ul>
 
-        {/* Mobile Toggle + Hamburger */}
+        {/* Mobile */}
         <div className="flex items-center gap-4 md:hidden">
           <button
             onClick={toggleDarkMode}
             className="p-2 rounded-full bg-accent/30 hover:bg-accent/50 transition"
-            aria-label="Toggle Dark Mode"
           >
             {darkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
 
-          <button
-            onClick={() => setOpen(true)}
-            className="text-foreground"
-            aria-label="Open menu"
-          >
+          <button onClick={() => setOpen(true)}>
             <Menu size={24} />
           </button>
         </div>
@@ -100,21 +99,22 @@ export default function Navbar() {
       {/* Mobile Menu */}
       {open && (
         <div className="fixed inset-0 z-50 bg-background">
-          {/* Header */}
           <div className="flex items-center justify-between h-16 px-6 border-b border-accent/40">
-            <span className="font-semibold text-foreground">
-              New Song Chapel
-            </span>
-            <button
-              onClick={() => setOpen(false)}
-              aria-label="Close menu"
-              className="text-foreground"
-            >
+
+            {/* Logo in mobile menu */}
+            <Image
+              src="/logo.svg"
+              alt="Logo"
+              width={140}
+              height={36}
+              className="h-9 w-auto"
+            />
+
+            <button onClick={() => setOpen(false)}>
               <X size={24} />
             </button>
           </div>
 
-          {/* Links */}
           <div className="flex flex-col items-center justify-center gap-8 text-lg mt-20">
             {navLinks.map((link) => (
               <Link

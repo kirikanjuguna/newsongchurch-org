@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "New Song Church",
+  title: "New Song Chapel",
   description: "A church on mission, serving the community",
 };
 

@@ -13,7 +13,7 @@ export default function MissionPage() {
           alt="Mission Work"
           className="absolute inset-0 h-full w-full object-cover"
         />
-        <div className="absolute inset-0 bg-black/60" />
+        <div className="absolute inset-0 bg-black/30" />
 
         <div className="relative z-10 h-full flex items-end">
           <div className="max-w-7xl mx-auto px-6 pb-12 md:pb-16 w-full text-center">

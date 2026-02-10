@@ -65,32 +65,34 @@ export default function ChurchPage() {
         </div>
       </section>
 
-      {/* ================= SUNDAY WORSHIP ================= */}
+      {/* ================= WORSHIP & FELLOWSHIP ================= */}
       <section className="relative py-32">
-        <div className="absolute inset-0">
-          <img
-            src="/church/sunday-worship.jpg"
-            alt="Sunday Worship"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-linear-to-b from-black/30 via-black/50 to-background" />
-        </div>
+      <div className="absolute inset-0">
+      <img
+      src="/church/sunday-worship.jpg"
+      alt="Sunday Worship"
+      className="w-full h-full object-cover object-top md:object-[center_1%]"
+      />
+      <div className="absolute inset-0 bg-linear-to-b from-black/30 via-black/50 to-background" />
+      </div>
 
-        <div className="relative max-w-4xl mx-auto px-6 text-center text-white">
-          <h2 className="text-3xl md:text-4xl font-semibold mb-6">
-            Worship & Fellowship
-          </h2>
 
-          <p className="mb-6 text-white/90">
-            Each Sunday we provide a space for spiritual worship through songs,
-            words and meditation on God’s glory and goodness in our lives.
-          </p>
+      <div className="relative max-w-4xl mx-auto px-6 text-center text-white">
+      <h2 className="text-3xl md:text-4xl font-semibold mb-6">
+      Worship & Fellowship
+      </h2>
 
-          <div className="mt-8 text-lg font-medium">
-            JOIN US: SUNDAYS <br />
-            9:00AM – 10:00AM &nbsp;|&nbsp; 10:00AM – 12:30PM
-          </div>
-        </div>
+
+      <p className="mb-6 text-white/90">
+      Each Sunday we provide a space for spiritual worship through songs, words and meditation on God’s glory and goodness in our lives.
+      </p>
+
+
+      <div className="mt-8 text-lg font-medium">
+      JOIN US: SUNDAYS <br />
+      9:00AM – 10:00AM &nbsp;|&nbsp; 10:00AM – 12:30PM
+      </div>
+      </div>
       </section>
 
       {/* ================= CHILDREN MINISTRY ================= */}
@@ -201,6 +203,320 @@ export default function ChurchPage() {
         </div>
       </section>
 
+
+      {/* ================= WOMEN'S MINISTRY ================= */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6 space-y-20">
+
+          {/* Intro */}
+          <div className="grid md:grid-cols-2 gap-14 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl md:text-4xl font-semibold mb-6">
+                Women’s Ministry
+              </h2>
+
+              <p className="mb-4">
+                Our Women’s Ministry exists to uplift, equip, and empower women
+                spiritually, emotionally, and socially through God’s Word and fellowship.
+              </p>
+
+              <p className="mb-4">
+                Through regular Bible study, prayer gatherings, and mentorship,
+                women are strengthened in faith and encouraged to grow in purpose.
+              </p>
+
+              <p>
+                The ministry also provides support systems for families, single mothers,
+                and women facing life challenges.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="relative h-[420px]"
+            >
+              <ImageSlider
+                images={[
+                  "/church/women-1.jpg",
+                  "/church/women-2.jpg",
+                  "/church/women-3.jpg",
+                ]}
+              />
+            </motion.div>
+          </div>
+
+          {/* Leader */}
+          <div className="grid md:grid-cols-2 gap-14 items-center">
+            <div className="relative h-[360px] rounded-2xl overflow-hidden">
+              <img
+                src="/church/women-leader.jpg"
+                alt="Women Ministry Leader"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-semibold mb-4">
+                Women Ministry Leadership
+              </h3>
+              <p>
+                The women’s ministry is led by dedicated women of faith who
+                disciple, mentor, and walk alongside others through prayer,
+                teaching, and practical support.
+              </p>
+            </div>
+          </div>
+
+          {/* Features */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                title: "Bible Study & Prayer",
+                text: "Regular gatherings focused on Scripture, prayer, and spiritual growth.",
+              },
+              {
+                title: "Mentorship",
+                text: "Older women mentoring younger women in faith, family, and purpose.",
+              },
+              {
+                title: "Life Support",
+                text: "Encouragement and practical help for women facing life challenges.",
+              },
+              {
+                title: "Fellowship",
+                text: "Strong community bonds built through shared faith and fellowship.",
+              },
+            ].map((item, i) => (
+              <div key={i} className="p-6 rounded-xl bg-muted/40 border border-border">
+                <h4 className="font-semibold mb-3">{item.title}</h4>
+                <p className="text-sm text-foreground/80">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* ================= YOUTH MINISTRY ================= */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6 space-y-20">
+
+          <div className="grid md:grid-cols-2 gap-14 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl md:text-4xl font-semibold mb-6">
+                Youth Ministry
+              </h2>
+
+              <p className="mb-4">
+                Our Youth Ministry equips young people to grow in Christ,
+                discover their calling, and live boldly for God.
+              </p>
+
+              <p className="mb-4">
+                Through discipleship, worship, creative arts, and leadership
+                opportunities, youth are mentored into strong Christian leaders.
+              </p>
+
+              <p>
+                Many youth actively serve in worship, dance, outreach,
+                and teaching ministries.
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="relative h-[420px]"
+            >
+              <ImageSlider
+                images={[
+                  "/church/youth-1.jpg",
+                  "/church/youth-2.jpg",
+                  "/church/youth-3.jpg",
+                ]}
+              />
+            </motion.div>
+          </div>
+
+          {/* Leader */}
+          <div className="grid md:grid-cols-2 gap-14 items-center">
+            <div className="relative h-[360px] rounded-2xl overflow-hidden">
+              <img
+                src="/church/youth-leader.jpg"
+                alt="Youth Leader"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-semibold mb-4">
+                Youth Leadership Team
+              </h3>
+              <p>
+                Youth leaders mentor and guide young believers through
+                discipleship, accountability, and service opportunities.
+              </p>
+            </div>
+          </div>
+
+          {/* Features */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { title: "Discipleship", text: "Strong biblical foundation and mentoring." },
+              { title: "Creative Arts", text: "Dance, music, drama and worship expression." },
+              { title: "Leadership Training", text: "Developing servant leaders early." },
+              { title: "Outreach", text: "Youth-led evangelism and community service." },
+            ].map((item, i) => (
+              <div key={i} className="p-6 rounded-xl bg-muted/40 border border-border">
+                <h4 className="font-semibold mb-3">{item.title}</h4>
+                <p className="text-sm text-foreground/80">{item.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+
+      {/* ================= MEN'S MINISTRY ================= */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6 space-y-20">
+
+          {/* Intro */}
+          <div className="grid md:grid-cols-2 gap-14 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl md:text-4xl font-semibold mb-4">
+                Men’s Ministry
+              </h2>
+
+              <p className="font-semibold mb-4 text-lg">
+                Motto: We are young men on a mission to become great MEN
+              </p>
+
+              <p className="mb-4">
+                The Men’s Ministry at New Song Fellowship focuses on mentoring and
+                evangelizing young men in our community — especially those from
+                single-parent homes who lack consistent male support and guidance.
+              </p>
+
+              <p className="mb-4">
+                Through monthly morning Bible breakfasts, we bring young men into
+                fellowship with one another and with Christ, creating a strong support
+                network rooted in faith.
+              </p>
+
+              <p>
+                Recognizing the real-life pressures many face as providers and
+                survivors of broken systems, the ministry helps them grow into
+                strong, God-centered men who positively impact their families
+                and community.
+              </p>
+            </motion.div>
+
+            {/* Slider */}
+            <motion.div
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              viewport={{ once: true }}
+              className="relative h-[420px]"
+            >
+              <ImageSlider
+                images={[
+                  "/church/men-1.jpg",
+                  "/church/men-2.jpg",
+                  "/church/men-3.jpg",
+                ]}
+              />
+            </motion.div>
+          </div>
+
+          {/* Leader / Description Block */}
+          <div className="grid md:grid-cols-2 gap-14 items-center">
+            <div className="relative h-[360px] rounded-2xl overflow-hidden">
+              <img
+                src="/church/men-leader.jpg"
+                alt="Men Ministry"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+            </div>
+
+            <div>
+              <h3 className="text-2xl font-semibold mb-4">
+                Building Strong Godly Men
+              </h3>
+
+              <p className="mb-4">
+                Alongside sharing Christ’s love, grace, and purpose, the ministry
+                integrates life skills training, parenting support, and encouragement
+                toward responsible and positive choices.
+              </p>
+
+              <p>
+                By affirming Godly values and personal potential, the ministry empowers
+                young men to grow in faith, lead with integrity, and become positive
+                influencers — fostering lasting transformation rooted in the Bible.
+              </p>
+            </div>
+          </div>
+
+          {/* Features Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              {
+                title: "Mentorship",
+                text: "Guiding young men who lack consistent male support.",
+              },
+              {
+                title: "Bible Breakfasts",
+                text: "Monthly morning fellowship and discipleship gatherings.",
+              },
+              {
+                title: "Life Skills",
+                text: "Training in responsibility, parenting, and leadership.",
+              },
+              {
+                title: "Community Impact",
+                text: "Raising men who transform families and communities.",
+              },
+            ].map((item, i) => (
+              <div key={i} className="p-6 rounded-xl bg-muted/40 border border-border">
+                <h4 className="font-semibold mb-3">{item.title}</h4>
+                <p className="text-sm text-foreground/80">{item.text}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Closing Statement */}
+          <div className="text-center max-w-3xl mx-auto">
+            <p className="text-lg font-medium">
+              At New Song Fellowship, every young boy child counts for a better community.
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+
       {/* ================= YOUTH & ALATS ================= */}
       <section className="relative py-32">
         <div className="absolute inset-0">
@@ -226,7 +542,7 @@ export default function ChurchPage() {
         </div>
       </section>
 
-      {/* ================= WOMEN MINISTRY ================= */}
+      {/* ================= WOMEN MINISTRY ================= 
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-6 space-y-20">
           <div className="grid md:grid-cols-2 gap-14 items-center">
@@ -274,7 +590,7 @@ export default function ChurchPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section>*/}
 
     </main>
   );

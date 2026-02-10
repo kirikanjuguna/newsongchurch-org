@@ -58,7 +58,7 @@ type Story = {
 
         {
           title: "Safe Sports Activities",
-          images: ["/community/sports-1.jpg", "/community/sports-2.jpg"],
+          images: ["/community/sports-1.jpg", "/community/sports-2.jpg", "/community/sports-3.jpg", "/community/sports-4.jpg", "/community/sports-5.jpg", "/community/sports-6.jpg"],
           content: `Soccer is a powerful influence among youth in Mukuru. Our structured soccer outreach combines sports training with spiritual mentorship.
 
       Ian Gibiya’s journey from young player to mentor shows how sports can build discipline, purpose, and faith. Today he coaches youth while studying at Bible college — multiplying impact through mentorship.`,
@@ -66,7 +66,7 @@ type Story = {
 
         {
           title: "The STORY OF KEVIN Nziu Mumbua",
-          images: ["/community/kevin-1.jpg", "/community/kevin-2.jpg"],
+          images: ["/community/kevin-1.jpg", "/community/kevin-2.jpg", "/community/kevin-3.jpg"],
           content: `Kevin Nziu Mumbua is today a youth pastor at New Song Chapel but where did it all start for him.
       The whole community knows Kevin as a Pastor even before he became one. He has always cared for others and always ready to serve whenever needed.
 
@@ -233,7 +233,7 @@ function StorySlider({ images }: { images: string[] }) {
   }, [images.length]);
 
   return (
-    <div className="relative w-full h-[360px] rounded-2xl overflow-hidden shadow-xl">
+    <div className="relative w-full h-[360px] rounded-2xl overflow-hidden shadow-xl ">
       <AnimatePresence mode="wait">
         <motion.div
           key={images[i]}

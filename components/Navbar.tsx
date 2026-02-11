@@ -17,6 +17,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
 
+  // Load theme
   useEffect(() => {
     const theme = localStorage.getItem("theme");
     if (theme === "dark") {
@@ -24,6 +25,12 @@ export default function Navbar() {
       setDarkMode(true);
     }
   }, []);
+
+  // Lock body scroll when menu open
+  useEffect(() => {
+    if (open) document.body.style.overflow = "hidden";
+    else document.body.style.overflow = "";
+  }, [open]);
 
   const toggleDarkMode = () => {
     if (darkMode) {
@@ -38,10 +45,10 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur-md border-b border-accent/40">
-      <nav className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-
-        {/* ✅ LOGO */}
+    <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-md border-b border-accent/40">
+      <nav className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
+        
+        {/* LOGO */}
         <Link href="/" className="flex items-center gap-3">
           <Image
             src="/logo.svg"
@@ -60,10 +67,10 @@ export default function Navbar() {
               <Link
                 href={link.href}
                 className="relative text-secondary transition hover:text-foreground
-                           after:absolute after:left-0 after:-bottom-1
-                           after:h-[1.5px] after:w-0 after:bg-foreground
-                           after:transition-all after:duration-300
-                           hover:after:w-full"
+                after:absolute after:left-0 after:-bottom-1
+                after:h-[1.5px] after:w-0 after:bg-foreground
+                after:transition-all after:duration-300
+                hover:after:w-full"
               >
                 {link.name}
               </Link>
@@ -81,8 +88,8 @@ export default function Navbar() {
           </li>
         </ul>
 
-        {/* Mobile */}
-        <div className="flex items-center gap-4 md:hidden">
+        {/* Mobile Controls */}
+        <div className="flex items-center gap-3 md:hidden">
           <button
             onClick={toggleDarkMode}
             className="p-2 rounded-full bg-accent/30 hover:bg-accent/50 transition"
@@ -90,45 +97,74 @@ export default function Navbar() {
             {darkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
 
-          <button onClick={() => setOpen(true)}>
+          <button
+            onClick={() => setOpen(true)}
+            className="p-2 rounded-lg hover:bg-accent/30 transition"
+            aria-label="Open menu"
+          >
             <Menu size={24} />
           </button>
         </div>
       </nav>
 
-      {/* Mobile Menu */}
-      {open && (
-        <div className="fixed inset-0 z-50 bg-background">
-          <div className="flex items-center justify-between h-16 px-6 border-b border-accent/40">
+      {/* ================= MOBILE DRAWER ================= */}
 
-            {/* Logo in mobile menu */}
-            <Image
-              src="/logo.svg"
-              alt="Logo"
-              width={140}
-              height={36}
-              className="h-9 w-auto"
-            />
+      {/* Overlay */}
+      <div
+        className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 md:hidden
+        ${open ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+        onClick={() => setOpen(false)}
+      />
 
-            <button onClick={() => setOpen(false)}>
-              <X size={24} />
-            </button>
-          </div>
+      {/* Drawer */}
+      <div
+        className={`fixed top-0 right-0 h-full w-full max-w-sm
+        bg-surface border-l border-accent/30 z-50 shadow-2xl
+        transform transition-transform duration-300 md:hidden
+        ${open ? "translate-x-0" : "translate-x-full"}`}
+      >
+        {/* Drawer Header */}
+        <div className="flex items-center justify-between h-16 px-5 bg-background border-b border-accent/30">
+          <Image
+            src="/logo.svg"
+            alt="Logo"
+            width={432}
+            height={93}
+            className="h-9 w-auto dark:invert"
+          />
 
-          <div className="flex flex-col items-center justify-center gap-8 text-lg mt-20">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="text-secondary hover:text-foreground transition"
-              >
-                {link.name}
-              </Link>
-            ))}
-          </div>
+          <button
+            onClick={() => setOpen(false)}
+            className="p-2 rounded-lg hover:bg-accent/30 transition"
+          >
+            <X size={24} />
+          </button>
         </div>
-      )}
+
+        {/* Drawer Links */}
+        <div className="flex flex-col px-5 py-6 gap-3">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              onClick={() => setOpen(false)}
+              className="
+                text-base font-semibold
+                py-4 px-4
+                rounded-xl
+                bg-background
+                border border-accent/20
+                text-secondary
+                hover:text-foreground
+                hover:bg-accent/10
+                transition
+              "
+            >
+              {link.name}
+            </Link>
+          ))}
+        </div>
+      </div>
     </header>
   );
 }

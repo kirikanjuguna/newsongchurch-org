@@ -189,38 +189,83 @@ function WhereWeServe() {
 }
 
 /* ---------------- OVERSIGHT ---------------- */
-
 function Oversight() {
   return (
     <Section title="Ministry Oversight">
       <Card>
-        <h3 className="text-xl font-semibold mb-4">Leadership</h3>
-        <ul className="space-y-2">
-          <li>Douglas Mukisa — Missionary Pastor</li>
-          <li>James Dennis — Missions Overseer</li>
-          <li>Dr. Kwasi Amoafo — Ministry Elder</li>
-          <li>Valerie Kiviaru — Women Leader</li>
-          <li>Teresia Wambui — Women Leader</li>
-          <li>Kevin Nziu Mumbua — Youth Pastor</li>
-          <li>Dorcas Sinaida — Children Ministry</li>
-        </ul>
+        <div className="space-y-16">
 
-        <h3 className="text-xl font-semibold mt-8 mb-4">Bible Teachers</h3>
-        <p>
-          Douglas Mukisa, Dr. Kwasi Amoafo, Pastor Mike Mitua,
-          Kevin Nziu Mumbua
-        </p>
+          {/* ===== Leadership ===== */}
+          <div>
 
-        <h3 className="text-xl font-semibold mt-10 mb-4">Partners</h3>
-
-        <div className="flex flex-wrap items-center gap-8 mt-4">
-          <div className="bg-white rounded-2xl p-4 shadow-md">
-            <Image src="/partner-1.png" alt="Partner 1" width={160} height={80} className="object-contain" />
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                { name: "Douglas Mukisa", role: "Missionary Pastor" },
+                { name: "James Dennis", role: "Missions Overseer" },
+                { name: "Dr. Kwasi Amoafo", role: "Ministry Elder" },
+                { name: "Valerie Kiviaru", role: "Women Leader" },
+                { name: "Teresia Wambui", role: "Women Leader" },
+                { name: "Kevin Nziu Mumbua", role: "Youth Pastor" },
+                { name: "Dorcas Sinaida", role: "Children Ministry" },
+              ].map((leader, index) => (
+                <div
+                  key={index}
+                  className="rounded-2xl bg-white/10 backdrop-blur-sm p-6
+                             border border-white/10
+                             hover:bg-white/15 hover:-translate-y-1
+                             transition duration-300"
+                >
+                  <h4 className="text-lg font-semibold">
+                    {leader.name}
+                  </h4>
+                  <p className="text-sm text-accent mt-1">
+                    {leader.role}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-4 shadow-md">
-            <Image src="/partner-2.png" alt="Partner 2" width={160} height={80} className="object-contain" />
+          {/* ===== Bible Teachers ===== */}
+          <div>
+            <h3 className="text-2xl font-semibold mb-6">
+              Bible Teachers
+            </h3>
+
+            <div className="rounded-2xl bg-white/10 p-6 border border-white/10">
+              <p className="leading-relaxed">
+                Douglas Mukisa, Dr. Kwasi Amoafo, Pastor Mike Mitua,
+                Kevin Nziu Mumbua
+              </p>
+            </div>
           </div>
+
+          {/* ===== Partners ===== */}
+          <div>
+            <h3 className="text-2xl font-semibold mb-8">
+              Our Partners
+            </h3>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
+              {["/partner-1.png", "/partner-2.png"].map((src, i) => (
+                <div
+                  key={i}
+                  className="bg-white rounded-2xl p-6 shadow-md
+                             flex items-center justify-center
+                             hover:shadow-xl transition duration-300"
+                >
+                  <Image
+                    src={src}
+                    alt={`Partner ${i + 1}`}
+                    width={140}
+                    height={70}
+                    className="object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
       </Card>
     </Section>

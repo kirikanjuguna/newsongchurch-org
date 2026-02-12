@@ -39,7 +39,7 @@ export default function MissionPage() {
 
           {/* left tall image */}
           <img
-            src="/mission/eye-clinic.jpg"
+            src="/mission/eyeclinic.jpg"
             alt="Eye Clinic"
             className="h-[520px] w-full object-cover rounded-2xl"
           />
@@ -212,7 +212,7 @@ export default function MissionPage() {
           {/* middle stacked images */}
           <div className="grid gap-6">
             <img
-              src="/mission/maasai-women.jpg"
+              src="/mission/maasainew.jpg"
               alt="Maasai Women"
               className="h-[250px] w-full object-cover rounded-2xl"
             />

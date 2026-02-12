@@ -15,7 +15,7 @@ export default function Footer() {
               alt="New Song Chapel Logo"
               width={432}
               height={93}
-              className="h-12 w-auto mb-4"
+              className="h-12 w-auto mb-4 dark:invert"
             />
 
             <p className="text-sm text-secondary leading-relaxed max-w-xs">

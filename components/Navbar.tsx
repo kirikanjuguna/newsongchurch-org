@@ -45,7 +45,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-background/90 backdrop-blur-md border-b border-accent/40">
+    <header className="sticky top-0 z-50 bg-[#D79A59] dark:bg-black backdrop-blur-md border-b border-accent/40">
       <nav className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
         
         {/* LOGO */}
@@ -61,12 +61,12 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <ul className="hidden md:flex items-center gap-6 text-sm">
+        <ul className="hidden md:flex items-center gap-6 text-sm text-[#3f2d23] dark:text-accent">
           {navLinks.map((link) => (
             <li key={link.name}>
               <Link
                 href={link.href}
-                className="relative text-secondary transition hover:text-foreground
+                className="relative text-[#3f2d23] dark:text-accent transition hover:text-foreground
                 after:absolute after:left-0 after:-bottom-1
                 after:h-[1.5px] after:w-0 after:bg-foreground
                 after:transition-all after:duration-300

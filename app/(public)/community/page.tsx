@@ -41,7 +41,7 @@ type Story = {
         },
 
         {
-          title: "The Story of Teresia Mwambui",
+          title: "The Story of Teresia Mumbua",
           images: ["/community/teresia.jpg"],
           content: `Teresia is a mother of seven, a community health promoter, women leader, and education mobilizer. She has supported families through evictions, floods, school crises, and domestic conflict cases.
 
@@ -49,21 +49,15 @@ type Story = {
         },
 
         {
-          title: "Urban Farm Skills for Our Kids",
-          images: ["/community/farming.jpg"],
-          content: `Children in Mukuru face food insecurity and limited exposure to practical life skills. Our urban farming program teaches responsibility, teamwork, and nutrition awareness.
+          title: "Reaching the Community with the Gospel",
+          images: ["/community/gospel.jpg"],
+          content: `What comes first for every soul is the Gospel, the Good News of our Lord Jesus Christ. For our community this remains the number one focus for our calling and over the year’s community leaders and Pastors have been trained and equipped to Preach a true and Biblical Gospel that our Lord Jesus Christ commanded us to Preach and Teach.
 
-      Through hands-on training, children learn how food is grown and how to contribute positively to their households and community — breaking cycles of insecurity with knowledge and discipline.`,
+      Training pastors and leaders in our community focuses on equipping local leaders with practical biblical skills that fit scripture. The training typically emphasizes biblical foundations, pastoral care, and ethical ministry, while also addressing real-world challenges such as poverty.
+
+      The goal is not only to grow effective servants, but to empower pastors to foster hope and positive change within their communities.`,
         },
-
-        {
-          title: "Safe Sports Activities",
-          images: ["/community/sports-1.jpg", "/community/sports-2.jpg", "/community/sports-3.jpg", "/community/sports-4.jpg", "/community/sports-5.jpg", "/community/sports-6.jpg"],
-          content: `Soccer is a powerful influence among youth in Mukuru. Our structured soccer outreach combines sports training with spiritual mentorship.
-
-      Ian Gibiya’s journey from young player to mentor shows how sports can build discipline, purpose, and faith. Today he coaches youth while studying at Bible college — multiplying impact through mentorship.`,
-        },
-
+        
         {
           title: "The STORY OF KEVIN Nziu Mumbua",
           images: ["/community/kevin-1.jpg", "/community/kevin-2.jpg", "/community/kevin-3.jpg"],
@@ -74,6 +68,8 @@ type Story = {
 
       From our Sunday school to serving in the youth group throughout his teenage life, from youth group to Bible College for three years, From Bible College to Pastoral ordination at New Song Church. Today at 27 years old Kevin has faithfully served his community for 13 years in CHRIST JESUS.`,
         },
+        
+
 
         {
           title: "MUKURU TEENAGE GIRL EMPOWERING",
@@ -87,15 +83,6 @@ type Story = {
       Mentorship classes have been offered in local schools like St. Catherine, Mariakani Primary, and Mukuru primary schools by our spiritual mothers who have been transformed by the WORD taught at New Song Church.`,
         },
 
-        {
-          title: "Reaching the Community with the Gospel",
-          images: ["/community/gospel.jpg"],
-          content: `What comes first for every soul is the Gospel, the Good News of our Lord Jesus Christ. For our community this remains the number one focus for our calling and over the year’s community leaders and Pastors have been trained and equipped to Preach a true and Biblical Gospel that our Lord Jesus Christ commanded us to Preach and Teach.
-
-      Training pastors and leaders in our community focuses on equipping local leaders with practical biblical skills that fit scripture. The training typically emphasizes biblical foundations, pastoral care, and ethical ministry, while also addressing real-world challenges such as poverty.
-
-      The goal is not only to grow effective servants, but to empower pastors to foster hope and positive change within their communities.`,
-        },
 
         {
           title: "The STORY OF Damaris Wanjiru Kuria",
@@ -108,6 +95,26 @@ type Story = {
 
       Everything began to change when she encountered Christ in 2009 at a New Song home fellowship in Mukuru. To this day Wanjiru has been walking with Christ for 16 years. She has never looked back because Christ became her KING. ONLY God’s redemptive plan changes lives.`,
         },
+
+
+        {
+          title: "Safe Sports Activities",
+          images: ["/community/sports-2.jpg", "/community/sports-1.jpg", "/community/sports-6.jpg"],
+          content: `Soccer is a powerful influence among youth in Mukuru. Our structured soccer outreach combines sports training with spiritual mentorship.
+
+      Ian Gibiya’s journey from young player to mentor shows how sports can build discipline, purpose, and faith. Today he coaches youth while studying at Bible college — multiplying impact through mentorship.`,
+        },
+
+
+        {
+          title: "Urban Farm Skills for Our Kids",
+          images: ["/community/farming.jpg"],
+          content: `Children in Mukuru face food insecurity and limited exposure to practical life skills. Our urban farming program teaches responsibility, teamwork, and nutrition awareness.
+
+      Through hands-on training, children learn how food is grown and how to contribute positively to their households and community — breaking cycles of insecurity with knowledge and discipline.`,
+        },
+
+
       ];
 
 

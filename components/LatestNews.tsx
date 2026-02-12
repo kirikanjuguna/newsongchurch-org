@@ -48,7 +48,7 @@ export default function LatestNews() {
             {/* IMAGE SIDE */}
             <div className="relative min-h-105 lg:min-h-full">
               <img
-                src="/news-placeholder.jpg"
+                src="/news.jpg"
                 alt="Mission work with children"
                 className="absolute inset-0 h-full w-full object-cover"
               />

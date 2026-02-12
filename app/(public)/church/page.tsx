@@ -19,10 +19,14 @@ export default function ChurchPage() {
             viewport={{ once: true }}
             className="relative h-[420px] rounded-2xl overflow-hidden"
           >
-            <img
-              src="/church/teach-the-word.jpg"
-              alt="Teaching the Word"
-              className="absolute inset-0 w-full h-full object-cover"
+            <ImageSlider
+              images={[
+                "/church/teach.jpg",
+                "/church/teach-1.jpg",
+                "/church/teach-2.jpg",
+                "/church/teach-3.jpg"
+              ]}
+
             />
             <div className="absolute inset-0 bg-black/25" />
           </motion.div>

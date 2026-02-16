@@ -48,10 +48,10 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 bg-[#D79A59] dark:bg-black backdrop-blur-md border-b border-accent/40">
-      <nav className="max-w-7xl mx-auto px-4 md:px-6 h-16 flex items-center justify-between">
+      <nav className="max-w-7xl mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
         
-        {/* LOGO */}
-        <Link href="/" className="flex items-center gap-3">
+        {/* ================= LOGO + NAME ================= */}
+        <Link href="/" className="flex flex-col items-start leading-tight">
           <Image
             src="/logo.svg"
             alt="New Song Chapel Logo"
@@ -60,9 +60,14 @@ export default function Navbar() {
             className="h-10 w-auto dark:invert"
             priority
           />
+
+          {/* Church Name Below Logo */}
+          <span className="text-xl md:text-xl font-black text-[#3f2d23] dark:text-accent tracking-wide">
+            New Song Chapel
+          </span>
         </Link>
 
-        {/* Desktop Nav */}
+        {/* ================= DESKTOP NAV ================= */}
         <ul className="hidden md:flex items-center gap-6 text-sm">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
@@ -106,7 +111,7 @@ export default function Navbar() {
           </li>
         </ul>
 
-        {/* Mobile Controls */}
+        {/* ================= MOBILE CONTROLS ================= */}
         <div className="flex items-center gap-3 md:hidden">
           <button
             onClick={toggleDarkMode}
@@ -125,14 +130,14 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Overlay */}
+      {/* ================= MOBILE OVERLAY ================= */}
       <div
         className={`fixed inset-0 bg-black/50 z-40 transition-opacity duration-300 md:hidden
         ${open ? "opacity-100" : "opacity-0 pointer-events-none"}`}
         onClick={() => setOpen(false)}
       />
 
-      {/* Drawer */}
+      {/* ================= MOBILE DRAWER ================= */}
       <div
         className={`fixed top-0 right-0 h-full w-full max-w-sm
         bg-surface border-l border-accent/30 z-50 shadow-2xl
@@ -140,14 +145,19 @@ export default function Navbar() {
         ${open ? "translate-x-0" : "translate-x-full"}`}
       >
         {/* Drawer Header */}
-        <div className="flex items-center justify-between h-16 px-5 bg-background border-b border-accent/30">
-          <Image
-            src="/logo.svg"
-            alt="Logo"
-            width={432}
-            height={93}
-            className="h-9 w-auto dark:invert"
-          />
+        <div className="flex items-center justify-between h-20 px-5 bg-background border-b border-accent/30">
+          <div className="flex flex-col leading-tight">
+            <Image
+              src="/logo.svg"
+              alt="Logo"
+              width={432}
+              height={93}
+              className="h-9 w-auto dark:invert"
+            />
+            <span className="text-xs font-semibold text-[#3f2d23] dark:text-accent tracking-wide">
+              New Song Chapel
+            </span>
+          </div>
 
           <button
             onClick={() => setOpen(false)}

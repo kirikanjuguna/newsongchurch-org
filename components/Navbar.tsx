@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, Sun, Moon } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const navLinks = [
   { name: "About Us", href: "/about" },
@@ -16,6 +17,7 @@ const navLinks = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const pathname = usePathname();
 
   // Load theme
   useEffect(() => {
@@ -61,21 +63,37 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <ul className="hidden md:flex items-center gap-6 text-sm text-[#3f2d23] dark:text-accent">
-          {navLinks.map((link) => (
-            <li key={link.name}>
-              <Link
-                href={link.href}
-                className="relative text-[#3f2d23] dark:text-accent transition hover:text-foreground
-                after:absolute after:left-0 after:-bottom-1
-                after:h-[1.5px] after:w-0 after:bg-foreground
-                after:transition-all after:duration-300
-                hover:after:w-full"
-              >
-                {link.name}
-              </Link>
-            </li>
-          ))}
+        <ul className="hidden md:flex items-center gap-6 text-sm">
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+
+            return (
+              <li key={link.name}>
+                <Link
+                  href={link.href}
+                  className={`relative transition
+                    ${
+                      isActive
+                        ? "text-foreground font-semibold"
+                        : "text-[#3f2d23] dark:text-accent hover:text-foreground"
+                    }
+                    
+                    after:absolute after:left-0 after:-bottom-1
+                    after:h-[2px]
+                    after:bg-foreground
+                    after:transition-all after:duration-300
+                    ${
+                      isActive
+                        ? "after:w-full"
+                        : "after:w-0 hover:after:w-full"
+                    }
+                  `}
+                >
+                  {link.name}
+                </Link>
+              </li>
+            );
+          })}
 
           <li>
             <button
@@ -106,8 +124,6 @@ export default function Navbar() {
           </button>
         </div>
       </nav>
-
-      {/* ================= MOBILE DRAWER ================= */}
 
       {/* Overlay */}
       <div
@@ -143,26 +159,31 @@ export default function Navbar() {
 
         {/* Drawer Links */}
         <div className="flex flex-col px-5 py-6 gap-3">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              onClick={() => setOpen(false)}
-              className="
-                text-base font-semibold
-                py-4 px-4
-                rounded-xl
-                bg-background
-                border border-accent/20
-                text-secondary
-                hover:text-foreground
-                hover:bg-accent/10
-                transition
-              "
-            >
-              {link.name}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setOpen(false)}
+                className={`
+                  text-base font-semibold
+                  py-4 px-4
+                  rounded-xl
+                  border
+                  transition
+                  ${
+                    isActive
+                      ? "bg-accent text-foreground border-accent"
+                      : "bg-background border-accent/20 text-secondary hover:bg-accent/10 hover:text-foreground"
+                  }
+                `}
+              >
+                {link.name}
+              </Link>
+            );
+          })}
         </div>
       </div>
     </header>

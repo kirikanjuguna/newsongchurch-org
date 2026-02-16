@@ -17,6 +17,10 @@ export default function Footer() {
               height={93}
               className="h-12 w-auto mb-4 dark:invert"
             />
+          {/* Church Name Below Logo 
+          <span className="text-xl md:text-xl font-black text-[#3f2d23] dark:text-accent tracking-wide">
+            New Song Chapel
+          </span> */}
 
             <p className="text-sm text-secondary leading-relaxed max-w-xs">
               Serving God, serving people, and transforming communities through

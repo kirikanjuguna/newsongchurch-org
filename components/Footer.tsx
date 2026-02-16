@@ -72,7 +72,7 @@ export default function Footer() {
 
         {/* Bottom */}
         <div className="mt-16 pt-8 border-t border-black/10 flex flex-col gap-4 md:flex-row md:justify-between text-sm text-secondary">
-          <p>© {new Date().getFullYear()} New Song Church.</p>
+          <p>© {new Date().getFullYear()} New Song Chapel.</p>
 
           <p>
             Design & Built by{" "}

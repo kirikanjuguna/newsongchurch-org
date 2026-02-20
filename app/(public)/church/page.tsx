@@ -142,9 +142,9 @@ export default function ChurchPage() {
             >
               <ImageSlider
                 images={[
-                  "/church/children-1.jpg",
-                  "/church/children-2.jpg",
-                  "/church/children-3.jpg",
+                  "/church/children.jpg",
+                  "/church/childrenone.jpg",
+                  "/church/childrentwo.jpg",
                 ]}
               />
             </motion.div>

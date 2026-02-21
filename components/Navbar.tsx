@@ -11,6 +11,7 @@ const navLinks = [
   { name: "Church", href: "/church" },
   { name: "Missions Work", href: "/mission" },
   { name: "Community", href: "/community" },
+  { name: "Boma Village", href: "/boma" },
   { name: "Contact Us", href: "/contact" },
 ];
 

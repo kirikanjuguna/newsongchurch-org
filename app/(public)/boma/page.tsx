@@ -120,131 +120,150 @@ export default function BomaPage() {
           </h2>
 
           {/* ===== OVERVIEW CARD ===== */}
-          <div className="mb-16 bg-white dark:bg-green-900 p-10 rounded-2xl shadow-2xl border border-green-200 dark:border-green-800 space-y-10">
+          <div className="mb-16 bg-white dark:bg-green-900 p-10 rounded-2xl shadow-xl border border-green-200 dark:border-green-800 space-y-10">
 
-            <div>
-              <h3 className="text-2xl font-semibold text-green-700 dark:text-green-300 mb-4">
+            <div className="space-y-4">
+              <h3 className="text-2xl font-semibold text-green-700 dark:text-green-300">
                 1. Vision and Purpose
               </h3>
+
               <p className="leading-relaxed text-lg">
                 The purpose of this project is to create a safe, self-sustaining
                 community that rescues vulnerable families from the slums of Nairobi
                 by providing housing, education, nutrition, recreation, and
-                family-based care through widows who foster children.
+                family-based care through widows who foster children. The land will
+                function as a holistic care, learning, and growth environment.
               </p>
             </div>
 
-            <div>
-              <h3 className="text-2xl font-semibold text-green-700 dark:text-green-300 mb-4">
+            <div className="space-y-4">
+              <h3 className="text-2xl font-semibold text-green-700 dark:text-green-300">
                 2. Target Beneficiaries
               </h3>
+
               <ul className="list-disc list-inside space-y-2 text-lg">
-                <li>Children rescued from Nairobi slums</li>
-                <li>Widows who foster vulnerable children</li>
-                <li>The wider community through education & skills</li>
+                <li>Children rescued from Nairobi slums.</li>
+                <li>Widows who foster and care for vulnerable children.</li>
+                <li>
+                  The wider community through education, food production,
+                  and skills development.
+                </li>
               </ul>
             </div>
-
           </div>
-            {/* ===== EXISTING GRID ===== */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          {/* ===== FULL INFORMATION CARDS GRID ===== */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
             {/* Housing Card */}
-            <div className="bg-white dark:bg-green-900 p-6 rounded-xl shadow-md border border-green-200 dark:border-green-800 space-y-4">
-                <h3 className="font-semibold text-green-700 dark:text-green-300">
+            <div className="bg-white dark:bg-green-900 p-8 rounded-2xl shadow-lg border border-green-200 dark:border-green-800 space-y-4 hover:-translate-y-2 transition duration-300">
+              <h3 className="text-lg font-semibold text-green-700 dark:text-green-300">
                 Residential Housing (3 Acres)
-                </h3>
-                <p className="text-sm">
+              </h3>
+
+              <p className="text-sm leading-relaxed">
                 Family-style housing where widows act as foster parents.
                 Each unit houses 1 widow and 6–10 children.
-                </p>
-                <ul className="text-sm list-disc list-inside space-y-1">
-                <li>Sanitation & clean water</li>
-                <li>Solar lighting</li>
-                <li>Secure fencing & pathways</li>
-                </ul>
-                <p className="text-sm font-medium">
-                Impact: Family-based care instead of dormitories.
-                </p>
+              </p>
+
+              <ul className="text-sm list-disc list-inside space-y-2">
+                <li>Sanitation & clean water systems</li>
+                <li>Solar lighting installations</li>
+                <li>Secure fencing & safe pathways</li>
+              </ul>
+
+              <p className="text-sm font-medium pt-2 border-t border-green-200 dark:border-green-800">
+                Impact: Family-based care instead of institutional dormitories.
+              </p>
             </div>
 
             {/* Education Card */}
-            <div className="bg-white dark:bg-green-900 p-6 rounded-xl shadow-md border border-green-200 dark:border-green-800 space-y-4">
-                <h3 className="font-semibold text-green-700 dark:text-green-300">
+            <div className="bg-white dark:bg-green-900 p-8 rounded-2xl shadow-lg border border-green-200 dark:border-green-800 space-y-4 hover:-translate-y-2 transition duration-300">
+              <h3 className="text-lg font-semibold text-green-700 dark:text-green-300">
                 Education Facilities (2 Acres)
-                </h3>
-                <p className="text-sm">
-                Modern Internet-based primary school within the compound.
-                </p>
-                <ul className="text-sm list-disc list-inside space-y-1">
-                <li>Classrooms</li>
-                <li>Library & Computer Lab</li>
+              </h3>
+
+              <p className="text-sm leading-relaxed">
+                A modern Internet-based primary school built within the compound.
+              </p>
+
+              <ul className="text-sm list-disc list-inside space-y-2">
+                <li>Fully equipped classrooms</li>
+                <li>Library & Computer Laboratory</li>
                 <li>Vocational Training Rooms</li>
-                </ul>
-                <p className="text-sm font-medium">
-                Impact: Break the cycle of poverty through education.
-                </p>
+              </ul>
+
+              <p className="text-sm font-medium pt-2 border-t border-green-200 dark:border-green-800">
+                Impact: Breaking the cycle of poverty through quality education.
+              </p>
             </div>
 
             {/* Playground Card */}
-            <div className="bg-white dark:bg-green-900 p-6 rounded-xl shadow-md border border-green-200 dark:border-green-800 space-y-4">
-                <h3 className="font-semibold text-green-700 dark:text-green-300">
+            <div className="bg-white dark:bg-green-900 p-8 rounded-2xl shadow-lg border border-green-200 dark:border-green-800 space-y-4 hover:-translate-y-2 transition duration-300">
+              <h3 className="text-lg font-semibold text-green-700 dark:text-green-300">
                 Playground & Sports (1.5 Acres)
-                </h3>
-                <ul className="text-sm list-disc list-inside space-y-1">
+              </h3>
+
+              <ul className="text-sm list-disc list-inside space-y-2">
                 <li>Soccer field</li>
                 <li>Multi-purpose courts</li>
                 <li>Safe play equipment</li>
                 <li>Organized sports programs</li>
-                </ul>
-                <p className="text-sm font-medium">
-                Impact: Physical health & emotional well-being.
-                </p>
+              </ul>
+
+              <p className="text-sm font-medium pt-2 border-t border-green-200 dark:border-green-800">
+                Impact: Promotes physical health and emotional well-being.
+              </p>
             </div>
 
             {/* Farm Card */}
-            <div className="bg-white dark:bg-green-900 p-6 rounded-xl shadow-md border border-green-200 dark:border-green-800 space-y-4">
-                <h3 className="font-semibold text-green-700 dark:text-green-300">
+            <div className="bg-white dark:bg-green-900 p-8 rounded-2xl shadow-lg border border-green-200 dark:border-green-800 space-y-4 hover:-translate-y-2 transition duration-300">
+              <h3 className="text-lg font-semibold text-green-700 dark:text-green-300">
                 Farm & Food Sustainability (3 Acres)
-                </h3>
-                <ul className="text-sm list-disc list-inside space-y-1">
+              </h3>
+
+              <ul className="text-sm list-disc list-inside space-y-2">
                 <li>Vegetable gardens</li>
                 <li>Fruit trees</li>
                 <li>Poultry, goats, cows</li>
-                <li>Organic farming</li>
-                </ul>
-                <p className="text-sm font-medium">
-                Impact: Food security & income generation.
-                </p>
+                <li>Organic farming methods</li>
+              </ul>
+
+              <p className="text-sm font-medium pt-2 border-t border-green-200 dark:border-green-800">
+                Impact: Food security and income generation.
+              </p>
             </div>
 
             {/* Widow Support Card */}
-            <div className="bg-white dark:bg-green-900 p-6 rounded-xl shadow-md border border-green-200 dark:border-green-800 space-y-4">
-                <h3 className="font-semibold text-green-700 dark:text-green-300">
+            <div className="bg-white dark:bg-green-900 p-8 rounded-2xl shadow-lg border border-green-200 dark:border-green-800 space-y-4 hover:-translate-y-2 transition duration-300">
+              <h3 className="text-lg font-semibold text-green-700 dark:text-green-300">
                 Support for Widows
-                </h3>
-                <ul className="text-sm list-disc list-inside space-y-1">
+              </h3>
+
+              <ul className="text-sm list-disc list-inside space-y-2">
                 <li>Housing & income opportunities</li>
-                <li>Childcare training</li>
-                <li>Entrepreneurship skills</li>
+                <li>Childcare and parenting training</li>
+                <li>Entrepreneurship skills development</li>
                 <li>Counseling & support groups</li>
-                </ul>
-                <p className="text-sm font-medium">
-                Impact: Dignity, income, and purpose.
-                </p>
+              </ul>
+
+              <p className="text-sm font-medium pt-2 border-t border-green-200 dark:border-green-800">
+                Impact: Restores dignity, income, and long-term purpose.
+              </p>
             </div>
 
             {/* Sustainability Card */}
-            <div className="bg-white dark:bg-green-900 p-6 rounded-xl shadow-md border border-green-200 dark:border-green-800 space-y-4">
-                <h3 className="font-semibold text-green-700 dark:text-green-300">
+            <div className="bg-white dark:bg-green-900 p-8 rounded-2xl shadow-lg border border-green-200 dark:border-green-800 space-y-4 hover:-translate-y-2 transition duration-300">
+              <h3 className="text-lg font-semibold text-green-700 dark:text-green-300">
                 Sustainability & Income
-                </h3>
-                <ul className="text-sm list-disc list-inside space-y-1">
+              </h3>
+
+              <ul className="text-sm list-disc list-inside space-y-2">
                 <li>Sale of surplus farm produce</li>
-                <li>Vocational skills</li>
+                <li>Vocational skills training</li>
                 <li>NGO & donor partnerships</li>
-                <li>Solar & rainwater harvesting</li>
-                </ul>
+                <li>Solar power & rainwater harvesting systems</li>
+              </ul>
             </div>
 
             </div>

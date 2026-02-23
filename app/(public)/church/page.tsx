@@ -394,6 +394,7 @@ export default function ChurchPage() {
                   "/church/youth-1.jpg",
                   "/church/youth-2.jpg",
                   "/church/youth-3.jpg",
+                  "/church/youth-4.jpg",
                 ]}
               />
             </motion.div>

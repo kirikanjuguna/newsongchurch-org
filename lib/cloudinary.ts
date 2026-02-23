@@ -38,8 +38,8 @@ export const uploadGalleryImage = (buffer: Buffer) =>
         folder: "gallery",
         resource_type: "image",
         transformation: [
-          { width: 2000, crop: "limit" },
-          { quality: "auto" },
+          { width: 1600, crop: "limit" },
+          { quality: "auto:good" },
           { fetch_format: "auto" },
         ],
       },

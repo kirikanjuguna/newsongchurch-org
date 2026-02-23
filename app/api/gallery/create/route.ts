@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/connectDB";
 import { Gallery } from "@/models/Gallery";
-import { uploadNewsImage } from "@/lib/cloudinary";
+import { uploadGalleryImage } from "@/lib/cloudinary";
 
 export async function POST(req: NextRequest) {
   try {
@@ -16,33 +16,31 @@ export async function POST(req: NextRequest) {
     const images = formData.getAll("images") as File[];
 
     if (!images || images.length === 0) {
-      return NextResponse.json({ success: false });
+      return NextResponse.json({ success: false, message: "No images" });
     }
 
-    // Upload all images in parallel
-    const uploadPromises = images.map(async (file) => {
+    for (const file of images) {
       const bytes = await file.arrayBuffer();
       const buffer = Buffer.from(bytes);
 
-      const result = await uploadNewsImage(buffer);
+      const result = await uploadGalleryImage(buffer);
 
-      return {
+      await Gallery.create({
         title,
         category,
         description,
         imageUrl: result.secure_url,
         publicId: result.public_id,
-      };
-    });
-
-    const uploaded = await Promise.all(uploadPromises);
-
-    await Gallery.insertMany(uploaded);
+      });
+    }
 
     return NextResponse.json({ success: true });
 
   } catch (error) {
-    console.error(error);
-    return NextResponse.json({ success: false }, { status: 500 });
+    console.error("UPLOAD ERROR:", error);
+    return NextResponse.json(
+      { success: false },
+      { status: 500 }
+    );
   }
 }

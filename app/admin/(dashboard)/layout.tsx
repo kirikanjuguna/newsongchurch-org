@@ -24,24 +24,29 @@ export default function AdminLayout({
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
+    <div className="min-h-screen bg- text-foreground">
 
       {/* ================= HEADER ================= */}
 
       <header className="border-b border-secondary/20 bg-surface sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
 
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-3">
-            <Image
-              src="/logo.svg"
-              alt="New Song Chapel Logo"
-              width={432}
-              height={93}
-              className="h-10 w-auto dark:invert"
-              priority
-            />
-          </Link>
+        {/* ================= LOGO + NAME ================= */}
+        <Link href="/" className="flex flex-col items-start leading-tight">
+          <Image
+            src="/logo.svg"
+            alt="New Song Chapel Logo"
+            width={432}
+            height={93}
+            className="h-10 w-auto dark:invert"
+            priority
+          />
+
+          {/* Church Name Below Logo */}
+          <span className="text-xl md:text-xl font-black text-[#3f2d23] dark:text-accent tracking-wide">
+            New Song Chapel
+          </span>
+        </Link>
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-6 font-medium text-[#3f2d23]">
@@ -51,6 +56,14 @@ export default function AdminLayout({
 
             <Link href="/admin/news/list" className="hover:opacity-80">
               All News
+            </Link>
+
+            <Link href="/admin/gallery" className="hover:opacity-80">
+              Upload Gallery
+            </Link>
+
+            <Link href="/admin/gallery/list" className="hover:opacity-80">
+              Gallery List
             </Link>
 
             <button

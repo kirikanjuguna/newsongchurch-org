@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/connectDB";
 import { Gallery } from "@/models/Gallery";
-import { uploadGalleryImage } from "@/lib/cloudinary";
+import { uploadNewsImage } from "@/lib/cloudinary";
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,40 +12,37 @@ export async function POST(req: NextRequest) {
     const title = formData.get("title") as string;
     const category = formData.get("category") as string;
     const description = formData.get("description") as string;
-    const file = formData.get("image") as File;
 
-    if (!file) {
-      return NextResponse.json(
-        { success: false, message: "Image is required" },
-        { status: 400 }
-      );
+    const images = formData.getAll("images") as File[];
+
+    if (!images || images.length === 0) {
+      return NextResponse.json({ success: false });
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    // Upload all images in parallel
+    const uploadPromises = images.map(async (file) => {
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
 
-    const uploadResult = await uploadGalleryImage(buffer);
+      const result = await uploadNewsImage(buffer);
 
-    const newItem = await Gallery.create({
-      title,
-      category,
-      description,
-      imageUrl: uploadResult.secure_url,
-      publicId: uploadResult.public_id,
+      return {
+        title,
+        category,
+        description,
+        imageUrl: result.secure_url,
+        publicId: result.public_id,
+      };
     });
 
-    return NextResponse.json({
-      success: true,
-      item: {
-        ...newItem.toObject(),
-        _id: newItem._id.toString(),
-      },
-    });
+    const uploaded = await Promise.all(uploadPromises);
+
+    await Gallery.insertMany(uploaded);
+
+    return NextResponse.json({ success: true });
+
   } catch (error) {
     console.error(error);
-    return NextResponse.json(
-      { success: false, message: "Something went wrong" },
-      { status: 500 }
-    );
+    return NextResponse.json({ success: false }, { status: 500 });
   }
 }

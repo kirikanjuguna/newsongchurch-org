@@ -5,12 +5,15 @@ import { cloudinary } from "@/lib/cloudinary";
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
 
-    const item = await Gallery.findById(params.id);
+    // ✅ UNWRAP params
+    const { id } = await context.params;
+
+    const item = await Gallery.findById(id);
 
     if (!item) {
       return NextResponse.json(
@@ -19,18 +22,18 @@ export async function DELETE(
       );
     }
 
+    // ✅ Delete from Cloudinary
     await cloudinary.uploader.destroy(item.publicId);
 
-    await item.deleteOne();
+    // ✅ Delete from MongoDB
+    await Gallery.findByIdAndDelete(id);
 
-    return NextResponse.json({
-      success: true,
-      message: "Deleted successfully",
-    });
+    return NextResponse.json({ success: true });
+
   } catch (error) {
-    console.error(error);
+    console.error("DELETE ERROR:", error);
     return NextResponse.json(
-      { success: false, message: "Delete failed" },
+      { success: false },
       { status: 500 }
     );
   }

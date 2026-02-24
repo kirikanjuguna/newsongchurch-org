@@ -49,7 +49,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 bg-[#D79A59] dark:bg-black backdrop-blur-md border-b border-accent/40">
+    <header className="sticky top-0 z-50 bg-[#e26c00] dark:bg-black backdrop-blur-md border-b border-accent/40">
       <nav className="max-w-7xl mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
         
         {/* ================= LOGO + NAME ================= */}
@@ -81,13 +81,13 @@ export default function Navbar() {
                   className={`relative transition
                     ${
                       isActive
-                        ? "text-foreground font-semibold"
-                        : "text-[#3f2d23] dark:text-accent hover:text-foreground"
+                        ? "text-white font-bold"
+                        : "text-white dark:text-accent hover:text-white"
                     }
                     
                     after:absolute after:left-0 after:-bottom-1
                     after:h-[2px]
-                    after:bg-foreground
+                    after:bg-white
                     after:transition-all after:duration-300
                     ${
                       isActive

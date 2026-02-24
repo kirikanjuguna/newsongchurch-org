@@ -310,9 +310,9 @@ export default function BomaPage() {
             PLEASE DONATE THROUGH OUR PARTNERS TO MAKE THIS DREAM COME TRUE.
           </p>
 
-          <button className="mt-8 bg-white text-green-800 px-8 py-4 rounded-full font-semibold shadow-lg hover:scale-105 transition duration-300">
+          {/*<button className="mt-8 bg-white text-green-800 px-8 py-4 rounded-full font-semibold shadow-lg hover:scale-105 transition duration-300">
             Donate Now
-          </button>
+          </button>*/}
         </div>
       </section>
 

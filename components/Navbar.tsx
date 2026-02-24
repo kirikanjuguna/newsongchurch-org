@@ -53,27 +53,23 @@ export default function Navbar() {
       <nav className="max-w-7xl mx-auto px-4 md:px-6 h-20 flex items-center justify-between">
         
         {/* ================= LOGO + NAME ================= */}
-        <Link href="/" className="flex flex-col items-start leading-tight">
-          {/*<Image
-            src="/logo.svg"
-            alt="New Song Chapel Logo"
-            width={432}
-            height={93}
-            className="h-10 w-auto dark:invert"
-            priority
-          />*/}
 
-          {/* Church Name Below Logo */}
-          <span className="text-xl md:text-l font-extrabold text-[#3f2d23] dark:text-accent tracking-wide">
+        <Link
+          href="/"
+          className="flex flex-col items-center justify-center text-center leading-tight"
+        >
+          {/* Church Name */}
+          <span className="text-xl md:text-2xl font-extrabold text-[#3f2d23] dark:text-accent tracking-wide">
             New Song Chapel
           </span>
-          
-            <Image
+
+          {/* Logo Below Name */}
+          <Image
             src="/logo.svg"
             alt="New Song Chapel Logo"
             width={432}
             height={93}
-            className="h-7 w-auto dark:invert"
+            className="h-5 w-auto mt-1 dark:invert"
             priority
           />
         </Link>

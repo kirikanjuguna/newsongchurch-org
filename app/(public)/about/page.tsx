@@ -204,7 +204,7 @@ function Oversight() {
                 { name: "James Dennis", role: "Missions Overseer" },
                 { name: "Dr. Kwasi Amoafo", role: "Ministry Elder" },
                 { name: "Valerie Kiviaru", role: "Women Leader" },
-                { name: "Teresia Wambui", role: "Women Leader" },
+                { name: "Teresia Mumbua", role: "Women Leader" },
                 { name: "Kevin Nziu Mumbua", role: "Youth Pastor" },
                 { name: "Dorcas Sinaida", role: "Children Ministry" },
               ].map((leader, index) => (

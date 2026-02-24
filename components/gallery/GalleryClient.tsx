@@ -38,7 +38,7 @@ export default function GalleryClient({ initialItems }: Props) {
 
       {/* HERO */}
       <div className="text-center max-w-4xl mx-auto mb-16">
-        <h1 className="text-4xl font-bold text-green-700 dark:text-green-300">
+        <h1 className="text-4xl font-bold text-foreground-700 dark:text--300">
           Church Gallery
         </h1>
         <p className="mt-4 text-gray-600 dark:text-gray-400">

@@ -56,7 +56,7 @@ export default function Navbar() {
 
         <Link
           href="/"
-          className="flex flex-col items-center justify-center text-center leading-tight"
+          className="flex flex-col items-center justify-center text-center leading-none"
         >
           {/* Church Name */}
           <span className="text-xl md:text-2xl font-extrabold text-[#3f2d23] dark:text-accent tracking-wide">
@@ -69,7 +69,7 @@ export default function Navbar() {
             alt="New Song Chapel Logo"
             width={432}
             height={93}
-            className="h-5 w-auto mt-1 dark:invert"
+            className="h-5 w-auto -mt-2 dark:invert"
             priority
           />
         </Link>

@@ -67,6 +67,15 @@ export default function Navbar() {
           <span className="text-xl md:text-l font-extrabold text-[#3f2d23] dark:text-accent tracking-wide">
             New Song Chapel
           </span>
+          
+            <Image
+            src="/logo.svg"
+            alt="New Song Chapel Logo"
+            width={432}
+            height={93}
+            className="h-10 w-auto dark:invert"
+            priority
+          />
         </Link>
 
         {/* ================= DESKTOP NAV ================= */}

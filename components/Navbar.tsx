@@ -73,7 +73,7 @@ export default function Navbar() {
             alt="New Song Chapel Logo"
             width={432}
             height={93}
-            className="h-10 w-auto dark:invert"
+            className="h-7 w-auto dark:invert"
             priority
           />
         </Link>

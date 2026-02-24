@@ -1,13 +1,10 @@
 import mongoose, { Schema, Document, Model } from "mongoose";
+import { GALLERY_CATEGORIES } from "@/lib/galleryCategories";
 
 export type GalleryCategory =
-  | "worship"
-  | "children"
-  | "women"
-  | "men"
-  | "outreach"
-  | "boma"
-  | "events";
+  | "church"
+  | "missions"
+  | "community";
 
 export interface IGallery extends Document {
   title: string;
@@ -22,7 +19,13 @@ export interface IGallery extends Document {
 const GallerySchema = new Schema<IGallery>(
   {
     title: { type: String, required: true },
-    category: { type: String, required: true },
+
+    category: {
+      type: String,
+      enum: GALLERY_CATEGORIES,
+      required: true,
+    },
+
     imageUrl: { type: String, required: true },
     publicId: { type: String, required: true },
     description: { type: String },

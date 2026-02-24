@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { GALLERY_CATEGORIES } from "@/lib/galleryCategories";
 
 export default function CreateGalleryPage() {
   const [files, setFiles] = useState<File[]>([]);
@@ -11,7 +12,6 @@ export default function CreateGalleryPage() {
     if (!e.target.files) return;
 
     const selected = Array.from(e.target.files);
-
     setFiles((prev) => [...prev, ...selected]);
   }
 
@@ -19,46 +19,53 @@ export default function CreateGalleryPage() {
     setFiles((prev) => prev.filter((_, i) => i !== index));
   }
 
-async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-  e.preventDefault();
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
 
-  if (files.length === 0) {
-    alert("Please select at least one image.");
-    return;
+    if (files.length === 0) {
+      alert("Please select at least one image.");
+      return;
+    }
+
+    setLoading(true);
+
+    const form = e.currentTarget;
+    const baseData = new FormData(form);
+    const formData = new FormData();
+
+    formData.append("title", baseData.get("title") as string);
+    formData.append("category", baseData.get("category") as string);
+    formData.append(
+      "description",
+      (baseData.get("description") as string) || ""
+    );
+
+    files.forEach((file) => {
+      formData.append("images", file);
+    });
+
+    try {
+      const res = await fetch("/api/gallery/create", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert("Upload successful");
+        setFiles([]);
+        form.reset();
+      } else {
+        alert(data.message || "Upload failed");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong.");
+    }
+
+    setLoading(false);
   }
-
-  setLoading(true);
-
-  const form = e.currentTarget;
-  const baseData = new FormData(form);
-
-  const formData = new FormData();
-
-  formData.append("title", baseData.get("title") as string);
-  formData.append("category", baseData.get("category") as string);
-  formData.append("description", baseData.get("description") as string);
-
-  files.forEach((file) => {
-    formData.append("images", file); // notice plural
-  });
-
-  const res = await fetch("/api/gallery/create", {
-    method: "POST",
-    body: formData,
-  });
-
-  const data = await res.json();
-
-  if (data.success) {
-    alert("Upload successful");
-    setFiles([]);
-    form.reset();
-  } else {
-    alert("Upload failed");
-  }
-
-  setLoading(false);
-}
 
   return (
     <div className="max-w-4xl mx-auto space-y-10">
@@ -67,7 +74,7 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
       </h1>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-
+        {/* Title */}
         <input
           name="title"
           placeholder="Title"
@@ -75,29 +82,28 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
           className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-black"
         />
 
+        {/* Category (Dynamic) */}
         <select
           name="category"
           required
           className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-black"
         >
-          <option value="worship">Worship</option>
-          <option value="children">Children</option>
-          <option value="women">Women</option>
-          <option value="men">Men</option>
-          <option value="outreach">Outreach</option>
-          <option value="boma">Boma</option>
-          <option value="events">Events</option>
+          {GALLERY_CATEGORIES.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat.charAt(0).toUpperCase() + cat.slice(1)}
+            </option>
+          ))}
         </select>
 
+        {/* Description */}
         <textarea
           name="description"
           placeholder="Description (optional)"
           className="w-full border border-gray-300 p-3 rounded-xl focus:outline-none focus:ring-2 focus:ring-black"
         />
 
-        {/* Custom File Upload Button */}
+        {/* File Upload */}
         <div className="space-y-4">
-
           <label className="flex items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-2xl cursor-pointer hover:border-black transition">
             <div className="text-center space-y-2">
               <p className="font-medium">Click to choose images</p>
@@ -115,43 +121,47 @@ async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
             />
           </label>
 
-          {/* Preview Grid */}
+          {/* Preview */}
           {files.length > 0 && (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {files.map((file, index) => (
-                <div
-                  key={index}
-                  className="relative group rounded-xl overflow-hidden border"
-                >
-                  <Image
-                    src={URL.createObjectURL(file)}
-                    alt="preview"
-                    width={300}
-                    height={300}
-                    className="object-cover w-full h-32"
-                  />
+              {files.map((file, index) => {
+                const previewUrl = URL.createObjectURL(file);
 
-                  <button
-                    type="button"
-                    onClick={() => removeFile(index)}
-                    className="absolute top-2 right-2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition"
+                return (
+                  <div
+                    key={index}
+                    className="relative group rounded-xl overflow-hidden border"
                   >
-                    Remove
-                  </button>
-                </div>
-              ))}
+                    <Image
+                      src={previewUrl}
+                      alt="preview"
+                      width={300}
+                      height={300}
+                      className="object-cover w-full h-32"
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => removeFile(index)}
+                      className="absolute top-2 right-2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition"
+                    >
+                      Remove
+                    </button>
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>
 
+        {/* Submit */}
         <button
           type="submit"
           disabled={loading}
-          className="bg-accent text-foreground px-8 py-3 rounded-xl hover:opacity-90 transition disabled:opacity-50"
+          className="bg-black text-white px-8 py-3 rounded-xl hover:opacity-90 transition disabled:opacity-50"
         >
           {loading ? "Uploading..." : "Upload Images"}
         </button>
-
       </form>
     </div>
   );

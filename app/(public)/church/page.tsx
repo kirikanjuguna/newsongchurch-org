@@ -145,6 +145,8 @@ export default function ChurchPage() {
                   "/church/children.jpg",
                   "/church/childrenone.jpg",
                   "/church/childrentwo.jpg",
+                  "/church/childrenthree.jpg",
+                  "/vbs.jpg",
                 ]}
               />
             </motion.div>

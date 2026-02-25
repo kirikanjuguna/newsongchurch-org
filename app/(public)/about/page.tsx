@@ -247,7 +247,7 @@ function Oversight() {
             </h3>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
-              {["/partner-1.png", "/partner-2.png"].map((src, i) => (
+              {["/partner-1.png", "/partner-2.png", "/partner-3.png", "/partner-4.png"].map((src, i) => (
                 <div
                   key={i}
                   className="bg-white rounded-2xl p-6 shadow-md

@@ -240,6 +240,35 @@ function Oversight() {
             </div>
           </div>
 
+          {/* ===== Board of Trustees ===== */}
+          <div>
+            <h3 className="text-2xl font-semibold mb-6">
+              Board of Trustees
+            </h3>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                { name: "Douglas Mukisa"},
+                { name: "Micheal Mitau"},
+                { name: "Esther Njuguna Nyange"},
+                { name: "Valerie Kivayiru"},
+                { name: "Dorcas Sinaida"},
+              ].map((board_member, index) => (
+                <div
+                  key={index}
+                  className="rounded-2xl bg-white/10 backdrop-blur-sm p-6
+                             border border-white/10
+                             hover:bg-white/15 hover:-translate-y-1
+                             transition duration-300"
+                >
+                  <h4 className="text-lg font-semibold">
+                    {board_member.name}
+                  </h4>
+
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* ===== Partners ===== */}
           <div>
             <h3 className="text-2xl font-semibold mb-8">

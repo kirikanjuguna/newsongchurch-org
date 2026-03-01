@@ -49,7 +49,7 @@ export default async function NewsPage() {
                 <div className="relative min-h-[560px]">
                   <img
                     src={featured.images?.[0] || "/news-placeholder.jpg"}
-                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition duration-700"
+                    className="absolute inset-0 w-full h-full object-cover group-hover:scale-10 transition duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-tr from-black/40 to-transparent" />
                 </div>

@@ -10,7 +10,7 @@ export default function BomaPage() {
       {/* ================= HERO SECTION ================= */}
       <section className="relative w-full h-[500px] flex items-center justify-center text-center">
         <Image
-          src="/boma-land.jpg"
+          src="/boma-land.webp"
           alt="Boma Village Land"
           fill
           priority

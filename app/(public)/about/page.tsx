@@ -234,7 +234,7 @@ function Oversight() {
 
             <div className="rounded-2xl bg-white/10 p-6 border border-white/10">
               <p className="leading-relaxed">
-                Douglas Mukisa, Dr. Kwasi Amoafo, Pastor Mike Mitua,
+                Douglas Mukisa, Dr. Kwasi Amoafo, Pastor Michael Mitau,
                 Kevin Nziu Mumbua
               </p>
             </div>
@@ -248,7 +248,7 @@ function Oversight() {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {[
                 { name: "Douglas Mukisa"},
-                { name: "Micheal Mitau"},
+                { name: "Michael Mitau"},
                 { name: "Esther Njuguna Nyange"},
                 { name: "Valerie Kivayiru"},
                 { name: "Dorcas Sinaida"},

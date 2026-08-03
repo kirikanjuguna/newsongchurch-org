@@ -1,12 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/connectDB";
-import { Gallery } from "@/models/Gallery";
+import { Gallery, GalleryCategory } from "@/models/Gallery";
 
 export async function GET(req: NextRequest) {
   await connectDB();
 
   const { searchParams } = new URL(req.url);
-  const category = searchParams.get("category");
+
+  const category = searchParams.get("category") as GalleryCategory | "all" | null;
 
   const query =
     category && category !== "all"

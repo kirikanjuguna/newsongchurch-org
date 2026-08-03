@@ -2,6 +2,8 @@ import { connectDB } from "@/lib/connectDB";
 import { Gallery } from "@/models/Gallery";
 import GalleryClient from "../../../components/gallery/GalleryClient";
 
+export const dynamic = "force-dynamic";
+
 export default async function GalleryPage() {
   await connectDB();
 

@@ -6,17 +6,30 @@ if (!MONGODB_URI) {
   throw new Error("Please define MONGODB_URI in .env.local");
 }
 
+mongoose.set("debug", true);
+
 let cached = (global as any).mongoose;
 
 if (!cached) {
-  cached = (global as any).mongoose = { conn: null, promise: null };
+  cached = (global as any).mongoose = {
+    conn: null,
+    promise: null,
+  };
 }
 
 export async function connectDB() {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI);
+    console.log(
+      "Connecting to:",
+      MONGODB_URI.replace(/:[^:@]+@/, ":****@")
+    );
+
+    cached.promise = mongoose.connect(MONGODB_URI, {
+      dbName: "newsongchurch",
+      serverSelectionTimeoutMS: 10000,
+    });
   }
 
   cached.conn = await cached.promise;

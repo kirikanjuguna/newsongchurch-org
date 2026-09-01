@@ -26,3 +26,23 @@
                     │                      │
                     │ Actual images/files  │
                     └──────────────────────┘
+
+
+
+
+
+                  NEWSong Church
+
+                         │
+                         ▼
+                 Next.js Application
+                         │
+              ┌──────────┴──────────┐
+              ▼                     ▼
+          MongoDB Atlas          Cloudinary
+        AWS N. Virginia          Media storage
+          us-east-1
+              │                     │
+              ▼                     ▼
+       News / Gallery          Images/videos
+       Admin / metadata        already stored
